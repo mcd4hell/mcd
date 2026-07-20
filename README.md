@@ -1,4 +1,4 @@
-# 👾 mcddev
+# 👾 Mcd Web
 
 > 💬 **Açık kaynaklı profesyonel kişisel websitesi.**
 
