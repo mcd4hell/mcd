@@ -1,4 +1,4 @@
-/* MCD.dev — kaynak script (dist/app.min.js uretilir) */
+/* MCD.dev — kaynak script (dist/app.min.js üretilir) */
 (() => {
   "use strict";
 
@@ -7,29 +7,76 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
 
+  const $ = (sel, scope = doc) => scope.querySelector(sel);
+  const $$ = (sel, scope = doc) => [...scope.querySelectorAll(sel)];
+  const lerp = (a, b, t) => a + (b - a) * t;
+
   root.classList.add("js");
 
-  /* --- Mobil menu --- */
-  const menuButton = doc.querySelector("#menu-button");
-  const mobileMenu = doc.querySelector("#mobile-menu");
+  /* ---------- Scroll ilerleme çubuğu + küçülen menü ---------- */
+  const progress = $("#scroll-progress");
+
+  const onScroll = () => {
+    const max = root.scrollHeight - innerHeight;
+    if (progress) progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    doc.body.classList.toggle("nav-scrolled", scrollY > 40);
+  };
+
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Mobil menü ---------- */
+  const menuButton = $("#menu-button");
+  const mobileMenu = $("#mobile-menu");
 
   if (menuButton && mobileMenu) {
+    const setMenu = (open) => {
+      menuButton.setAttribute("aria-expanded", String(open));
+      mobileMenu.classList.toggle("is-open", open);
+    };
+
     menuButton.addEventListener("click", () => {
-      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-      menuButton.setAttribute("aria-expanded", String(!isOpen));
-      mobileMenu.classList.toggle("hidden");
+      setMenu(menuButton.getAttribute("aria-expanded") !== "true");
     });
 
-    doc.querySelectorAll(".mobile-link").forEach((link) => {
-      link.addEventListener("click", () => {
-        menuButton.setAttribute("aria-expanded", "false");
-        mobileMenu.classList.add("hidden");
-      });
+    $$(".mobile-link").forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
+    });
+
+    addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setMenu(false);
+    });
+
+    doc.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !menuButton.contains(e.target)) setMenu(false);
     });
   }
 
-  /* --- Scroll reveal --- */
-  const revealEls = [...doc.querySelectorAll("[data-reveal]")];
+  /* ---------- Scrollspy: aktif bölümü menüde işaretle ---------- */
+  const navLinks = $$(".nav-link[href^='#']");
+
+  if (navLinks.length) {
+    const sections = navLinks
+      .map((link) => $(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          navLinks.forEach((link) =>
+            link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`)
+          );
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    sections.forEach((sec) => spy.observe(sec));
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  const revealEls = $$("[data-reveal]");
 
   if (revealEls.length) {
     const io = new IntersectionObserver(
@@ -49,7 +96,43 @@
     });
   }
 
-  /* --- Yazi scramble efekti --- */
+  /* ---------- Sayaçlar (data-count) ---------- */
+  const counters = $$("[data-count]");
+
+  if (counters.length) {
+    const runCount = (el) => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || "";
+      if (reduceMotion || !Number.isFinite(target)) {
+        el.textContent = el.dataset.count + suffix;
+        return;
+      }
+      const dur = 1400;
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const cio = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          runCount(entry.target);
+          cio.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.6 }
+    );
+
+    counters.forEach((el) => cio.observe(el));
+  }
+
+  /* ---------- Yazı scramble efekti ---------- */
   const GLYPHS = "!<>-_\\/[]{}—=+*^?#$%&";
 
   const scramble = (el) => {
@@ -80,35 +163,176 @@
     requestAnimationFrame(tick);
   };
 
-  doc.querySelectorAll("[data-scramble]").forEach((el) => {
+  $$("[data-scramble]").forEach((el) => {
     scramble(el);
     el.addEventListener("pointerenter", () => scramble(el));
   });
 
-  /* --- Hero durum mesaji rotasyonu --- */
-  const statusEl = doc.querySelector("#hero-status");
+  /* ---------- Hero durumu: daktilo efekti ---------- */
+  const statusEl = $("#hero-status");
   const STATUSES = [
-    "online, muhtemelen kod yaziyor",
-    "bug ile pazarlik yapiyor",
-    "kahve molasinda (kisa surer)",
-    "commit mesaji dusunuyor",
-    "dark mode'da felsefe yapiyor",
+    "online, muhtemelen kod yazıyor",
+    "bug ile pazarlık yapıyor",
+    "kahve molasında (kısa sürer)",
+    "commit mesajı düşünüyor",
+    "dark mode'da felsefe yapıyor",
+    "tab'ları kapatmayı reddediyor",
+    "oirat'ta ortalığı sakinleştiriyor",
+    "guard bot'a yeni numara öğretiyor",
   ];
 
-  if (statusEl && !reduceMotion) {
-    let si = 0;
-    setInterval(() => {
-      si = (si + 1) % STATUSES.length;
-      statusEl.style.opacity = "0";
-      setTimeout(() => {
-        statusEl.textContent = STATUSES[si];
-        statusEl.style.opacity = "1";
-      }, 260);
-    }, 3600);
-    statusEl.style.transition = "opacity .26s ease";
+  if (statusEl) {
+    if (reduceMotion) {
+      statusEl.textContent = STATUSES[0];
+    } else {
+      let si = 0;
+      let ci = 0;
+      let deleting = false;
+
+      const type = () => {
+        const text = STATUSES[si];
+        ci += deleting ? -1 : 1;
+        statusEl.textContent = text.slice(0, ci);
+
+        let delay = deleting ? 26 : 46;
+        if (!deleting && ci === text.length) {
+          delay = 2600;
+          deleting = true;
+        } else if (deleting && ci === 0) {
+          deleting = false;
+          si = (si + 1) % STATUSES.length;
+          delay = 400;
+        }
+        setTimeout(type, delay);
+      };
+
+      type();
+    }
   }
 
-  /* --- Sivi imlec --- */
+  /* ---------- Profil kartında canlı saat ---------- */
+  const clockEl = $("#local-clock");
+
+  if (clockEl) {
+    const fmt = new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit" });
+    const tickClock = () => {
+      clockEl.textContent = fmt.format(new Date());
+    };
+    tickClock();
+    setInterval(tickClock, 15000);
+  }
+
+  /* ---------- Discord sohbeti: yazıyor → mesaj ---------- */
+  const chat = $("#chat-thread");
+
+  if (chat) {
+    const messages = $$(".chat-message", chat);
+    const typing = $("#chat-typing");
+    let played = false;
+
+    const play = () => {
+      if (played) return;
+      played = true;
+
+      if (reduceMotion) {
+        messages.forEach((m) => m.classList.add("is-sent"));
+        typing?.remove();
+        return;
+      }
+
+      messages.forEach((m, i) => {
+        setTimeout(() => {
+          m.classList.add("is-sent");
+          if (typing && i === messages.length - 1) {
+            typing.style.opacity = "0";
+            setTimeout(() => typing.remove(), 400);
+          }
+        }, 900 + i * 1300);
+      });
+    };
+
+    new IntersectionObserver(
+      (entries, obs) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        play();
+        obs.disconnect();
+      },
+      { threshold: 0.35 }
+    ).observe(chat);
+  }
+
+  /* ---------- Yıldız alanı kanvası ---------- */
+  const canvas = $("#starfield");
+
+  if (canvas && !reduceMotion) {
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+    let w = 0;
+    let h = 0;
+    let px = 0;
+    let py = 0;
+    let running = true;
+
+    const resize = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      w = innerWidth;
+      h = innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(Math.floor((w * h) / 11000), 160);
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: 0.25 + Math.random() * 0.75,
+        r: 0.4 + Math.random() * 1.3,
+        tw: Math.random() * Math.PI * 2,
+      }));
+    };
+
+    addEventListener("resize", resize);
+    resize();
+
+    if (finePointer) {
+      addEventListener("pointermove", (e) => {
+        px = (e.clientX / w - 0.5) * 2;
+        py = (e.clientY / h - 0.5) * 2;
+      });
+    }
+
+    doc.addEventListener("visibilitychange", () => {
+      running = !doc.hidden;
+      if (running) requestAnimationFrame(draw);
+    });
+
+    let t = 0;
+    const draw = () => {
+      if (!running) return;
+      t += 0.016;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const s of stars) {
+        s.y -= s.z * 0.12;
+        if (s.y < -4) s.y = h + 4;
+
+        const ox = px * s.z * -14;
+        const oy = py * s.z * -10;
+        const alpha = 0.25 + 0.55 * Math.abs(Math.sin(t * 0.8 + s.tw));
+
+        ctx.beginPath();
+        ctx.arc(s.x + ox, s.y + oy, s.r * s.z, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(190, 255, 224, ${alpha * s.z})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    };
+
+    draw();
+  }
+
+  /* ---------- Sıvı imleç ---------- */
   if (finePointer && !reduceMotion) {
     const blob = doc.createElement("div");
     blob.id = "cursor-blob";
@@ -126,58 +350,107 @@
       my = e.clientY;
       doc.body.classList.add("has-cursor");
       dot.style.transform = `translate(${mx}px, ${my}px)`;
+
+      const hot = e.target.closest("a, button, [data-tilt], [data-confetti]");
+      doc.body.classList.toggle("cursor-hot", Boolean(hot));
     });
 
-    addEventListener("pointerleave", () => doc.body.classList.remove("has-cursor"));
+    doc.addEventListener("pointerleave", () => doc.body.classList.remove("has-cursor"));
 
     const follow = () => {
-      bx += (mx - bx) * 0.08;
-      by += (my - by) * 0.08;
+      bx = lerp(bx, mx, 0.08);
+      by = lerp(by, my, 0.08);
       blob.style.transform = `translate(${bx}px, ${by}px)`;
       requestAnimationFrame(follow);
     };
     follow();
   }
 
-  /* --- 3D tilt + glare --- */
+  /* ---------- 3D tilt + parlama (yumuşatılmış) ---------- */
   if (finePointer && !reduceMotion) {
-    doc.querySelectorAll("[data-tilt]").forEach((card) => {
+    $$("[data-tilt]").forEach((card) => {
       const glare = doc.createElement("span");
       glare.className = "glare";
       card.append(glare);
 
+      let tx = 0, ty = 0;       // hedef açılar
+      let cx = 0, cy = 0;       // mevcut açılar
+      let hover = false;
+      let raf = 0;
+
+      const animate = () => {
+        cx = lerp(cx, tx, 0.14);
+        cy = lerp(cy, ty, 0.14);
+        const settled = !hover && Math.abs(cx) < 0.05 && Math.abs(cy) < 0.05;
+
+        card.style.transform = settled
+          ? ""
+          : `perspective(900px) rotateX(${cx}deg) rotateY(${cy}deg) translateY(${hover ? -4 : 0}px)`;
+
+        if (settled) {
+          raf = 0;
+          return;
+        }
+        raf = requestAnimationFrame(animate);
+      };
+
       card.addEventListener("pointermove", (e) => {
         const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;
-        const py = (e.clientY - r.top) / r.height;
-        card.style.transform = `perspective(900px) rotateX(${(0.5 - py) * 10}deg) rotateY(${(px - 0.5) * 12}deg) translateY(-4px)`;
-        card.style.setProperty("--gx", `${px * 100}%`);
-        card.style.setProperty("--gy", `${py * 100}%`);
+        const nx = (e.clientX - r.left) / r.width;
+        const ny = (e.clientY - r.top) / r.height;
+        tx = (0.5 - ny) * 10;
+        ty = (nx - 0.5) * 12;
+        hover = true;
+        card.style.setProperty("--gx", `${nx * 100}%`);
+        card.style.setProperty("--gy", `${ny * 100}%`);
+        if (!raf) raf = requestAnimationFrame(animate);
       });
 
       card.addEventListener("pointerleave", () => {
-        card.style.transform = "";
+        tx = 0;
+        ty = 0;
+        hover = false;
+        if (!raf) raf = requestAnimationFrame(animate);
       });
     });
   }
 
-  /* --- Manyetik butonlar --- */
+  /* ---------- Manyetik butonlar ---------- */
   if (finePointer && !reduceMotion) {
-    doc.querySelectorAll("[data-magnetic]").forEach((btn) => {
+    $$("[data-magnetic]").forEach((btn) => {
+      let tx = 0, ty = 0;
+      let cx = 0, cy = 0;
+      let raf = 0;
+
+      const animate = () => {
+        cx = lerp(cx, tx, 0.2);
+        cy = lerp(cy, ty, 0.2);
+        const settled = tx === 0 && ty === 0 && Math.abs(cx) < 0.1 && Math.abs(cy) < 0.1;
+        btn.style.transform = settled ? "" : `translate(${cx}px, ${cy}px)`;
+        if (settled) {
+          raf = 0;
+          return;
+        }
+        raf = requestAnimationFrame(animate);
+      };
+
       btn.addEventListener("pointermove", (e) => {
         const r = btn.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        btn.style.transform = `translate(${dx * 0.22}px, ${dy * 0.3}px)`;
+        tx = (e.clientX - (r.left + r.width / 2)) * 0.22;
+        ty = (e.clientY - (r.top + r.height / 2)) * 0.3;
+        if (!raf) raf = requestAnimationFrame(animate);
       });
+
       btn.addEventListener("pointerleave", () => {
-        btn.style.transform = "";
+        tx = 0;
+        ty = 0;
+        if (!raf) raf = requestAnimationFrame(animate);
       });
     });
   }
 
-  /* --- Emoji konfeti --- */
-  const EMOJI = ["✨", "💜", "🚀", "🎮", "☕", "🧃", "💾", "🌙"];
+  /* ---------- Emoji konfeti ---------- */
+  const EMOJI = ["✨", "💚", "🚀", "🎮", "☕", "🧃", "💾", "🌙"];
 
   const burst = (x, y, count = 14) => {
     if (reduceMotion) return;
@@ -197,12 +470,44 @@
     }
   };
 
-  doc.querySelectorAll("[data-confetti]").forEach((el) => {
+  $$("[data-confetti]").forEach((el) => {
     el.addEventListener("click", (e) => burst(e.clientX, e.clientY));
   });
 
-  /* --- Yukari cik butonu --- */
-  const toTop = doc.querySelector("#to-top");
+  /* ---------- Toast ---------- */
+  let toastTimer = 0;
+
+  const toast = (msg) => {
+    let el = $("#toast");
+    if (!el) {
+      el = doc.createElement("div");
+      el.id = "toast";
+      el.setAttribute("role", "status");
+      el.className = "glass rounded-xl px-5 py-3 text-sm font-medium text-white";
+      doc.body.append(el);
+    }
+    el.textContent = msg;
+    clearTimeout(toastTimer);
+    requestAnimationFrame(() => el.classList.add("is-visible"));
+    toastTimer = setTimeout(() => el.classList.remove("is-visible"), 2400);
+  };
+
+  /* ---------- E-posta kopyalama ---------- */
+  $$("[data-copy]").forEach((el) => {
+    el.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(el.dataset.copy);
+        toast("E-posta panoya kopyalandı ✨");
+        burst(e.clientX, e.clientY, 10);
+      } catch {
+        location.href = `mailto:${el.dataset.copy}`;
+      }
+    });
+  });
+
+  /* ---------- Yukarı çık butonu ---------- */
+  const toTop = $("#to-top");
 
   if (toTop) {
     addEventListener(
@@ -210,10 +515,12 @@
       () => toTop.classList.toggle("is-visible", scrollY > 600),
       { passive: true }
     );
-    toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+    toTop.addEventListener("click", () =>
+      scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" })
+    );
   }
 
-  /* --- Konami parti modu --- */
+  /* ---------- Konami parti modu ---------- */
   const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
   let ki = 0;
 
@@ -223,5 +530,317 @@
     ki = 0;
     doc.body.classList.toggle("party");
     burst(innerWidth / 2, innerHeight / 2, 26);
+    toast(doc.body.classList.contains("party") ? "Parti modu açıldı 🎉" : "Parti bitti, işe dönüyoruz 🧑‍💻");
   });
+
+  /* ---------- Komut paleti (Ctrl+K) ---------- */
+  const palette = $("#palette");
+  const paletteInput = $("#palette-input");
+  const paletteList = $("#palette-list");
+
+  if (palette && paletteInput && paletteList) {
+    const norm = (s) => s.toLocaleLowerCase("tr-TR");
+    const goTo = (sel) => $(sel)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+
+    const ACTIONS = [
+      { label: "# hakkımda bölümüne git", hint: "bölüm", run: () => goTo("#about") },
+      { label: "# projeler bölümüne git", hint: "bölüm", run: () => goTo("#projects") },
+      { label: "# setup bölümüne git", hint: "bölüm", run: () => goTo("#setup") },
+      { label: "# terminal bölümüne git", hint: "bölüm", run: () => goTo("#terminal") },
+      { label: "# iletişim bölümüne git", hint: "bölüm", run: () => goTo("#contact") },
+      { label: "Sayfanın başına dön", hint: "bölüm", run: () => scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }) },
+      {
+        label: "E-postayı kopyala",
+        hint: "aksiyon",
+        run: async () => {
+          try {
+            await navigator.clipboard.writeText("mcdinspace@gmail.com");
+            toast("E-posta panoya kopyalandı ✨");
+          } catch {
+            location.href = "mailto:mcdinspace@gmail.com";
+          }
+        },
+      },
+      { label: "GitHub profilini aç (mcd4hell)", hint: "link", run: () => open("https://github.com/mcd4hell", "_blank", "noopener") },
+      { label: "Konfeti patlat", hint: "eğlence", run: () => burst(innerWidth / 2, innerHeight / 3, 20) },
+      {
+        label: "Parti modunu aç/kapat",
+        hint: "eğlence",
+        run: () => {
+          doc.body.classList.toggle("party");
+          burst(innerWidth / 2, innerHeight / 2, 26);
+        },
+      },
+    ];
+
+    let filtered = ACTIONS;
+    let active = 0;
+
+    const paint = () => {
+      [...paletteList.children].forEach((li, i) => {
+        li.classList.toggle("is-active", i === active);
+        if (i === active) li.scrollIntoView({ block: "nearest" });
+      });
+    };
+
+    const runAction = (a) => {
+      closePalette();
+      a.run();
+    };
+
+    const render = () => {
+      paletteList.innerHTML = "";
+      if (!filtered.length) {
+        const li = doc.createElement("li");
+        li.className = "px-3 py-6 text-center text-muted";
+        li.textContent = "Hiçbir şey bulunamadı 🤷";
+        paletteList.append(li);
+        return;
+      }
+      filtered.forEach((a, i) => {
+        const li = doc.createElement("li");
+        li.className = "palette-item flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5";
+        const label = doc.createElement("span");
+        label.textContent = a.label;
+        const hint = doc.createElement("span");
+        hint.className = "shrink-0 text-[10px] uppercase text-muted";
+        hint.textContent = a.hint;
+        li.append(label, hint);
+        li.addEventListener("click", () => runAction(a));
+        li.addEventListener("pointerenter", () => {
+          active = i;
+          paint();
+        });
+        paletteList.append(li);
+      });
+      paint();
+    };
+
+    const openPalette = () => {
+      palette.classList.remove("hidden");
+      palette.classList.add("flex");
+      paletteInput.value = "";
+      filtered = ACTIONS;
+      active = 0;
+      render();
+      paletteInput.focus();
+    };
+
+    const closePalette = () => {
+      palette.classList.add("hidden");
+      palette.classList.remove("flex");
+    };
+
+    $("#palette-button")?.addEventListener("click", openPalette);
+    $("#palette-backdrop")?.addEventListener("click", closePalette);
+
+    paletteInput.addEventListener("input", () => {
+      const q = norm(paletteInput.value.trim());
+      filtered = q ? ACTIONS.filter((a) => norm(a.label).includes(q)) : ACTIONS;
+      active = 0;
+      render();
+    });
+
+    addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        palette.classList.contains("hidden") ? openPalette() : closePalette();
+        return;
+      }
+      if (palette.classList.contains("hidden")) return;
+      if (e.key === "Escape") {
+        closePalette();
+        return;
+      }
+      if (!filtered.length) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        active = (active + 1) % filtered.length;
+        paint();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        active = (active - 1 + filtered.length) % filtered.length;
+        paint();
+      } else if (e.key === "Enter" && filtered[active]) {
+        runAction(filtered[active]);
+      }
+    });
+  }
+
+  /* ---------- İnteraktif terminal ---------- */
+  const termIn = $("#term-in");
+  const termOut = $("#term-out");
+  const termBody = $("#term-body");
+
+  if (termIn && termOut && termBody) {
+    const print = (text, cls = "") => {
+      const line = doc.createElement("div");
+      if (cls) line.className = cls;
+      line.textContent = text;
+      termOut.append(line);
+      termBody.scrollTop = termBody.scrollHeight;
+    };
+
+    const COMMANDS = {
+      help: () => print("komutlar: whoami · projects · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
+      whoami: () => print("MCD (mcd4hell) — full-stack developer, Oirat kurucusu. TypeScript sever, bug'larla pazarlık eder."),
+      projects: () => {
+        print("• Oirat Moderation — Oirat sunucusunun düzen botu (uyarı, susturma, log)");
+        print("• Oirat Guard      — anti-raid & anti-spam güvenlik botu");
+        print("gerisi gizli-planlar/ klasöründe 🤫", "text-muted");
+      },
+      oirat: () => {
+        print("⚔️ Oirat — MCD'nin Discord sunucusu.");
+        print("Moderation bot düzeni sağlar, Guard bot kapıda bekler. İkisi de burada yazıldı.");
+      },
+      github: () => {
+        print("github.com/mcd4hell açılıyor...");
+        open("https://github.com/mcd4hell", "_blank", "noopener");
+      },
+      setup: () => print("VS Code + Tailwind + Tame Impala + kahve. Denenmiş, onaylanmış."),
+      contact: () => print("mcdinspace@gmail.com — DM kutusu her zaman açık."),
+      coffee: () => {
+        print("☕ demleniyor... tamamdır. Verimlilik +%12.");
+        burst(innerWidth / 2, innerHeight / 2, 10);
+      },
+      party: () => {
+        doc.body.classList.toggle("party");
+        print(doc.body.classList.contains("party") ? "🎉 parti modu: AÇIK" : "parti modu: kapalı. işe dönüyoruz.");
+      },
+      ls: () => print("projeler/  setup/  gizli-planlar/  bitmemis-yan-projeler/  (247 öğe)"),
+      date: () => print(new Date().toLocaleString("tr-TR")),
+      clear: () => {
+        termOut.innerHTML = "";
+      },
+      sudo: () => print("Güzel deneme. Burada root benim. 😎", "text-red-300"),
+      exit: () => print("Buradan çıkış yok, kaydırmaya devam. 🙃", "text-muted"),
+    };
+
+    print("MCD terminaline hoş geldin. 'help' yazarak başla.", "text-muted");
+
+    termBody.addEventListener("click", () => termIn.focus());
+
+    const history = [];
+    let hi = 0;
+
+    termIn.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const partial = termIn.value.trim().toLocaleLowerCase("tr-TR");
+        if (!partial) return;
+        const matches = [...Object.keys(COMMANDS), "echo"].filter((c) => c.startsWith(partial));
+        if (matches.length === 1) termIn.value = matches[0] + " ";
+        else if (matches.length > 1) print(matches.join("  "), "text-muted");
+        return;
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (history.length) {
+          hi = Math.max(0, hi - 1);
+          termIn.value = history[hi] || "";
+        }
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        hi = Math.min(history.length, hi + 1);
+        termIn.value = history[hi] || "";
+        return;
+      }
+      if (e.key !== "Enter") return;
+
+      const raw = termIn.value.trim();
+      termIn.value = "";
+      if (!raw) return;
+      history.push(raw);
+      hi = history.length;
+
+      print(`mcd@dev:~$ ${raw}`, "text-mint");
+      const [cmd, ...rest] = raw.split(/\s+/);
+      const key = cmd.toLocaleLowerCase("tr-TR");
+
+      if (key === "echo") print(rest.join(" "));
+      else if (COMMANDS[key]) COMMANDS[key]();
+      else print(`komut bulunamadı: ${cmd} — 'help' dene`, "text-red-300");
+    });
+  }
+
+  /* ---------- Commit ısı haritası ---------- */
+  const contrib = $("#contrib");
+
+  if (contrib) {
+    const totalEl = $("#contrib-total");
+    const frag = doc.createDocumentFragment();
+    let total = 0;
+
+    for (let w = 0; w < 52; w++) {
+      const wave = 0.55 + 0.45 * Math.sin(w / 4.2 + 1);
+      for (let d = 0; d < 7; d++) {
+        const weekend = d === 0 || d === 6 ? 0.55 : 1;
+        const heat = Math.random() * wave * weekend;
+        const level = heat > 0.72 ? 4 : heat > 0.52 ? 3 : heat > 0.34 ? 2 : heat > 0.16 ? 1 : 0;
+        const commits = level === 0 ? 0 : level * 2 + Math.floor(Math.random() * 3);
+        total += commits;
+
+        const cell = doc.createElement("i");
+        cell.className = "contrib-cell";
+        cell.dataset.level = String(level);
+        cell.title = commits ? `${commits} commit` : "dinlenme günü";
+        frag.append(cell);
+      }
+    }
+
+    contrib.append(frag);
+    if (totalEl) totalEl.textContent = total.toLocaleString("tr-TR");
+  }
+
+  /* ---------- Şu an çalıyor ---------- */
+  const npTrack = $("#np-track");
+  const npBar = $("#np-bar");
+
+  if (npTrack && npBar) {
+    const TRACKS = [
+      "Tame Impala — The Less I Know The Better",
+      "Tame Impala — Let It Happen",
+      "Tame Impala — Borderline",
+      "Daft Punk — Something About Us",
+      "Mac DeMarco — Chamber of Reflection",
+    ];
+
+    if (reduceMotion) {
+      npBar.style.width = "40%";
+    } else {
+      const DUR = 24000;
+      let ti = 0;
+      let start = performance.now();
+
+      const tick = (now) => {
+        let p = (now - start) / DUR;
+        if (p >= 1) {
+          start = now;
+          p = 0;
+          ti = (ti + 1) % TRACKS.length;
+          npTrack.textContent = TRACKS[ti];
+        }
+        npBar.style.width = `${p * 100}%`;
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    }
+  }
+
+  /* ---------- Sekme başlığı ---------- */
+  const baseTitle = doc.title;
+
+  doc.addEventListener("visibilitychange", () => {
+    doc.title = doc.hidden ? "gitme 🥺 — MCD" : baseTitle;
+  });
+
+  /* ---------- Konsol imzası ---------- */
+  console.log(
+    "%c MCD.dev %c selam, kaynağa bakan meraklı 👀 — ↑↑↓↓←→←→BA dene ",
+    "background:#58f2aa;color:#04120b;font-weight:bold;border-radius:4px 0 0 4px;padding:4px 8px",
+    "background:#161a26;color:#dbe0e6;border-radius:0 4px 4px 0;padding:4px 8px"
+  );
 })();
