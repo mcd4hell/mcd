@@ -13,6 +13,57 @@
 
   root.classList.add("js");
 
+  /* ---------- Türkçe / English ---------- */
+  const languageButton = $("#language-button");
+  const mobileLanguageButton = $("#mobile-language-button");
+  const languageMeta = {
+    tr: { title: "MCD — full-stack developer", description: "MCD'nin kod, tasarım ve internet köşesi. TypeScript, React ve Node.js ile hızlı, eğlenceli web deneyimleri.", ogLocale: "tr_TR" },
+    en: { title: "MCD — full-stack developer", description: "MCD's corner of code, design and the internet. Fast, playful web experiences with TypeScript, React and Node.js.", ogLocale: "en_US" },
+  };
+  const translations = {
+    tr: { heroStatus: "online, muhtemelen kod yazıyor", about: "hakkımda", projects: "projeler", setup: "setup", terminal: "terminal", contact: "iletişim", services: "ne yapıyorum", message: "Mesaj at", projectCount: "proje gösteriliyor" },
+    en: { heroStatus: "online, probably writing code", about: "about", projects: "projects", setup: "setup", terminal: "terminal", contact: "contact", services: "what I do", message: "Send a message", projectCount: "projects shown" },
+  };
+  const setLanguage = (language) => {
+    const lang = language === "en" ? "en" : "tr";
+    const copy = translations[lang];
+    root.lang = lang;
+    localStorage.setItem("mcd-language", lang);
+    doc.title = languageMeta[lang].title;
+    $("meta[name='description']")?.setAttribute("content", languageMeta[lang].description);
+    $("meta[property='og:description']")?.setAttribute("content", languageMeta[lang].description);
+    $("meta[property='og:locale']")?.setAttribute("content", languageMeta[lang].ogLocale);
+    $("#hero-status") && ($("#hero-status").textContent = copy.heroStatus);
+    const labels = { about: copy.about, projects: copy.projects, setup: copy.setup, terminal: copy.terminal, contact: copy.contact };
+    $$(`[href^="#"]`).forEach((link) => { const key = link.getAttribute("href")?.slice(1); if (labels[key] && link.classList.contains("nav-link")) link.textContent = `# ${labels[key]}`; });
+    const projectTotal = doc.querySelectorAll("[data-project-category]").length || 2;
+    $("#project-count") && ($("#project-count").textContent = `${projectTotal} ${copy.projectCount}`);
+    [languageButton, mobileLanguageButton].forEach((button) => { if (button) { button.dataset.language = lang; button.setAttribute("aria-label", lang === "tr" ? "Dili İngilizceye çevir" : "Switch language to Turkish"); } });
+    $$(".language-option").forEach((option, i) => option.classList.toggle("is-active", (lang === "tr" ? i === 0 : i === 1)));
+  };
+  const toggleLanguage = () => setLanguage(root.lang === "tr" ? "en" : "tr");
+  languageButton?.addEventListener("click", toggleLanguage);
+  mobileLanguageButton?.addEventListener("click", toggleLanguage);
+  setLanguage(localStorage.getItem("mcd-language") || "tr");
+
+  /* ---------- Tema tercihi ---------- */
+  const THEMES = ["night", "contrast", "soft"];
+  const themeButton = $("#theme-button");
+  const savedTheme = localStorage.getItem("mcd-theme");
+  const setTheme = (theme) => {
+    const next = THEMES.includes(theme) ? theme : "night";
+    root.dataset.theme = next;
+    localStorage.setItem("mcd-theme", next);
+    if (themeButton) themeButton.textContent = next === "soft" ? "☼" : next === "contrast" ? "◑" : "◐";
+    if (themeButton) themeButton.setAttribute("aria-label", `Tema: ${next}. Değiştirmek için tıkla`);
+  };
+  setTheme(savedTheme || "night");
+  themeButton?.addEventListener("click", () => {
+    const next = THEMES[(THEMES.indexOf(root.dataset.theme) + 1) % THEMES.length];
+    setTheme(next);
+    toast(`Tema: ${next === "night" ? "gece" : next === "contrast" ? "yüksek kontrast" : "yumuşak"}`);
+  });
+
   /* ---------- Scroll ilerleme çubuğu + küçülen menü ---------- */
   const progress = $("#scroll-progress");
 
@@ -520,6 +571,55 @@
     );
   }
 
+  /* ---------- Proje detay modalı ---------- */
+  const projectModal = $("#project-modal");
+  const projectData = {
+    moderation: { kicker: "Discord bot · aktif", title: "Oirat Moderation", description: "Oirat sunucusunun günlük düzenini görünmez bir yardımcı gibi ayakta tutan moderasyon sistemi.", problem: "Yoğun toplulukta kuralları hızlı ve tutarlı uygulamak.", solution: "Uyarı, susturma, otomatik kural ve detaylı log akışlarını tek bir botta birleştirmek.", tags: ["Discord.js", "Node.js", "MongoDB"], status: "● Aktif geliştirme" },
+    guard: { kicker: "Discord bot · aktif", title: "Oirat Guard", description: "Raid, spam ve sahte hesaplara karşı sunucunun kapısında bekleyen güvenlik botu.", problem: "Kötü niyetli girişleri moderatörlerden önce tespit etmek.", solution: "Anti-raid, anti-spam ve sahte hesap filtrelerini Redis destekli hızlı kontrollerle çalıştırmak.", tags: ["Discord.js", "TypeScript", "Redis"], status: "● Koruma aktif" },
+  };
+  const modalFields = { kicker: $("#project-modal-kicker"), title: $("#project-modal-title"), description: $("#project-modal-description"), problem: $("#project-modal-problem"), solution: $("#project-modal-solution"), tags: $("#project-modal-tags"), status: $("#project-modal-status") };
+  let lastProjectTrigger = null;
+  const closeProjectModal = () => { projectModal?.classList.add("hidden"); projectModal?.classList.remove("flex"); lastProjectTrigger?.focus(); };
+  const openProjectModal = (key, trigger) => {
+    const data = projectData[key];
+    if (!projectModal || !data) return;
+    lastProjectTrigger = trigger;
+    Object.entries(modalFields).forEach(([field, el]) => { if (field !== "tags" && el) el.textContent = data[field]; });
+    if (modalFields.tags) { modalFields.tags.innerHTML = ""; data.tags.forEach((tag) => { const el = doc.createElement("span"); el.className = "rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint"; el.textContent = tag; modalFields.tags.append(el); }); }
+    projectModal.classList.remove("hidden"); projectModal.classList.add("flex"); $("#project-modal-close")?.focus();
+  };
+  $$(".project-details").forEach((button) => button.addEventListener("click", () => openProjectModal(button.dataset.project, button)));
+  $("#project-modal-close")?.addEventListener("click", closeProjectModal);
+  $("#project-modal-backdrop")?.addEventListener("click", closeProjectModal);
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && projectModal && !projectModal.classList.contains("hidden")) closeProjectModal(); });
+
+  /* ---------- Proje filtreleri ---------- */
+  const projectFilters = $$("[data-filter]");
+  const projectCards = $$('[data-project-category]');
+  const projectCount = $("#project-count");
+
+  if (projectFilters.length && projectCards.length) {
+    const applyFilter = (filter) => {
+      let visible = 0;
+      projectFilters.forEach((button) => {
+        const active = button.dataset.filter === filter;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      projectCards.forEach((card) => {
+        const show = filter === "all" || card.dataset.projectCategory === filter;
+        card.classList.toggle("is-filtered-out", !show);
+        card.setAttribute("aria-hidden", String(!show));
+        if (show) visible++;
+      });
+      if (projectCount) projectCount.textContent = `${visible} proje gösteriliyor`;
+    };
+
+    projectFilters.forEach((button) => {
+      button.addEventListener("click", () => applyFilter(button.dataset.filter || "all"));
+    });
+  }
+
   /* ---------- Konami parti modu ---------- */
   const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
   let ki = 0;
@@ -562,6 +662,14 @@
         },
       },
       { label: "GitHub profilini aç (mcd4hell)", hint: "link", run: () => open("https://github.com/mcd4hell", "_blank", "noopener") },
+      { label: "Gece temasına geç", hint: "tema", run: () => setTheme("night") },
+      { label: "Switch to English", hint: "language", run: () => setLanguage("en") },
+      { label: "Türkçeye geç", hint: "dil", run: () => setLanguage("tr") },
+      { label: "Yüksek kontrast temasına geç", hint: "tema", run: () => setTheme("contrast") },
+      { label: "Yumuşak temaya geç", hint: "tema", run: () => setTheme("soft") },
+      { label: "Oirat Moderation detaylarını aç", hint: "proje", run: () => openProjectModal("moderation") },
+      { label: "Oirat Guard detaylarını aç", hint: "proje", run: () => openProjectModal("guard") },
+      { label: "Hizmetler bölümüne git", hint: "bölüm", run: () => goTo("#services") },
       { label: "Konfeti patlat", hint: "eğlence", run: () => burst(innerWidth / 2, innerHeight / 3, 20) },
       {
         label: "Parti modunu aç/kapat",
@@ -682,13 +790,23 @@
     };
 
     const COMMANDS = {
-      help: () => print("komutlar: whoami · projects · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
+      help: () => print("komutlar: whoami · projects · filter <tümü|bot> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
       whoami: () => print("MCD (mcd4hell) — full-stack developer, Oirat kurucusu. TypeScript sever, bug'larla pazarlık eder."),
       projects: () => {
         print("• Oirat Moderation — Oirat sunucusunun düzen botu (uyarı, susturma, log)");
         print("• Oirat Guard      — anti-raid & anti-spam güvenlik botu");
         print("gerisi gizli-planlar/ klasöründe 🤫", "text-muted");
       },
+      filter: (value) => {
+        const aliases = { tümü: "all", all: "all", bot: "bot", web: "web", araç: "tool", tool: "tool" };
+        const key = aliases[value?.toLocaleLowerCase("tr-TR") || "all"];
+        const button = key && $(`[data-filter="${key}"]`);
+        if (button) {
+          button.click();
+          print(`proje filtresi: ${value}`);
+        } else print("kullanım: filter tümü | bot | web | araç", "text-muted");
+      },
+      stack: () => print("TypeScript · React · Next.js · Node.js · Tailwind · PostgreSQL · Docker"),
       oirat: () => {
         print("⚔️ Oirat — MCD'nin Discord sunucusu.");
         print("Moderation bot düzeni sağlar, Guard bot kapıda bekler. İkisi de burada yazıldı.");
@@ -698,6 +816,14 @@
         open("https://github.com/mcd4hell", "_blank", "noopener");
       },
       setup: () => print("VS Code + Tailwind + Tame Impala + kahve. Denenmiş, onaylanmış."),
+      services: () => print("web deneyimleri · bot & otomasyon · ürünleştirme"),
+      lang: (value) => setLanguage(value?.toLocaleLowerCase("tr-TR") === "en" ? "en" : "tr"),
+      theme: (value) => {
+        const aliases = { gece: "night", night: "night", kontrast: "contrast", contrast: "contrast", yumuşak: "soft", soft: "soft" };
+        const next = aliases[value?.toLocaleLowerCase("tr-TR") || ""];
+        if (next) { setTheme(next); print(`tema: ${next}`); } else print("kullanım: theme gece | kontrast | yumuşak", "text-muted");
+      },
+      about: () => print("MCD — full-stack developer, Oirat kurucusu. Temiz kod, küçük sürprizler."),
       contact: () => print("mcdinspace@gmail.com — DM kutusu her zaman açık."),
       coffee: () => {
         print("☕ demleniyor... tamamdır. Verimlilik +%12.");
@@ -760,6 +886,7 @@
       const key = cmd.toLocaleLowerCase("tr-TR");
 
       if (key === "echo") print(rest.join(" "));
+      else if (["filter", "theme", "lang"].includes(key)) COMMANDS[key](rest.join(" "));
       else if (COMMANDS[key]) COMMANDS[key]();
       else print(`komut bulunamadı: ${cmd} — 'help' dene`, "text-red-300");
     });
@@ -785,7 +912,10 @@
         const cell = doc.createElement("i");
         cell.className = "contrib-cell";
         cell.dataset.level = String(level);
-        cell.title = commits ? `${commits} commit` : "dinlenme günü";
+        const label = commits ? `${commits} commit` : "dinlenme günü";
+        cell.title = label;
+        cell.setAttribute("aria-label", label);
+        cell.setAttribute("role", "img");
         frag.append(cell);
       }
     }
