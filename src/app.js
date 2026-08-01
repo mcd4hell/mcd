@@ -13,6 +13,111 @@
 
   root.classList.add("js");
 
+  const PROJECTS = {
+    portfolio: {
+      category: "web",
+      title: "MCD.dev",
+      description: "Bu sitenin kendisi: tek sayfalık portföy, Discord esintili arayüz, canlı etkileşimler ve GitHub odaklı içerik güncellemeleri.",
+      tags: ["HTML", "Tailwind CSS", "JavaScript"],
+      link: "https://github.com/mcd4hell/mcd",
+      kicker: "Web · public repo",
+      problem: "Portföyü süslü laflarla değil, hızlı açılan ve net okunan içerikle ayakta tutmak.",
+      solution: "Tek sayfada güçlü görsel dil, hafif etkileşimler ve günlük GitHub senkronuyla yaşayan bir vitrin kurmak.",
+      status: "● Public repo · 31 Tem 2026 güncellendi",
+    },
+    profile: {
+      category: "profile",
+      title: "GitHub Profile README",
+      description: "GitHub profilini boş bırakmayan README: stack, istatistik kartları, commit yılanı ve site bağlantıları tek vitrinde.",
+      tags: ["Markdown", "SVG", "GitHub"],
+      link: "https://github.com/mcd4hell/mcd4hell",
+      kicker: "Profil · public repo",
+      problem: "GitHub profili boşsa ilk izlenim de boş kalıyor.",
+      solution: "README içinde canlı istatistikler, sosyal linkler ve görsel küçük numaralarla profili tek bakışta anlatmak.",
+      status: "● Public repo · 20 Tem 2026 güncellendi",
+    },
+  };
+
+  const syncProjectContent = () => {
+    const filterButtons = $$(".project-filter");
+    if (filterButtons[1]) {
+      filterButtons[1].textContent = "Web";
+      filterButtons[1].dataset.filter = "web";
+    }
+    if (filterButtons[2]) {
+      filterButtons[2].textContent = "Profil";
+      filterButtons[2].dataset.filter = "profile";
+    }
+    filterButtons[3]?.remove();
+
+    const cards = $$('[data-project-category]');
+    const [portfolioCard, profileCard] = cards;
+
+    if (portfolioCard) {
+      portfolioCard.dataset.projectCategory = PROJECTS.portfolio.category;
+      portfolioCard.innerHTML = `
+        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-mint to-[#0f766e] p-5">
+          <div class="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/20 blur-2xl"></div>
+          <div class="rounded-xl border border-white/15 bg-[#101623]/85 p-4 shadow-xl backdrop-blur-xl">
+            <div class="flex items-center gap-2 text-xs">
+              <span class="grid h-8 w-8 place-items-center rounded-full bg-mint text-sm font-bold text-[#04180f]">&lt;/&gt;</span>
+              <p><b class="text-white">MCD.dev</b> <span class="ml-1 rounded bg-mint px-1 text-[9px] font-bold text-[#04180f]">WEB</span></p>
+            </div>
+            <div class="mt-3 rounded-lg border-l-4 border-aqua bg-black/30 p-3 text-[11px]">
+              <p class="font-semibold text-white">Portföy commit'i</p>
+              <p class="mt-1 text-white/60">tek sayfa · canlı etkileşim · repo senkronu</p>
+            </div>
+            <p class="mt-3 text-[10px] text-white/40">✓ açık kaynak · son güncelleme 31 Tem 2026</p>
+          </div>
+        </div>
+        <div class="relative p-3 pb-2 pt-5">
+          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-mint/20 px-2 py-1 text-[10px] font-semibold text-mint">PUBLIC REPO · 31 TEM 2026</span><a href="${PROJECTS.portfolio.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD.dev reposunu aç">Repo'yu aç ↗</a></div>
+          <h3 class="font-display text-xl font-bold text-white">${PROJECTS.portfolio.title}</h3>
+          <p class="mt-2 text-sm font-light leading-6 text-muted">${PROJECTS.portfolio.description}</p>
+          <div class="mt-4 flex items-center justify-between gap-3">
+            <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
+              ${PROJECTS.portfolio.tags.map((tag) => `<span class="rounded bg-white/5 px-2 py-1">${tag}</span>`).join("")}
+            </div>
+            <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="portfolio">Detaylar</button>
+          </div>
+        </div>
+      `;
+    }
+
+    if (profileCard) {
+      profileCard.dataset.projectCategory = PROJECTS.profile.category;
+      profileCard.innerHTML = `
+        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-grape to-[#312e81] p-5">
+          <div class="absolute -left-10 -bottom-10 h-36 w-36 rounded-full bg-white/15 blur-2xl"></div>
+          <div class="rounded-xl border border-white/15 bg-[#101623]/85 p-4 shadow-xl backdrop-blur-xl">
+            <div class="flex items-center justify-between text-xs">
+              <p class="flex items-center gap-2"><span class="text-base">#</span><b class="text-white">mcd4hell</b></p>
+              <span class="rounded-full bg-grape/25 px-2 py-0.5 text-[9px] font-bold text-[#d9d1ff]">README</span>
+            </div>
+            <div class="mt-3 space-y-2 text-[11px]">
+              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Stack</span><span class="text-mint">✓ görünür</span></p>
+              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">İstatistikler</span><span class="text-mint">✓ canlı</span></p>
+              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Site bağlantısı</span><span class="text-mint">✓ açık</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="relative p-3 pb-2 pt-5">
+          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-grape/20 px-2 py-1 text-[10px] font-semibold text-[#d9d1ff]">PROFİL REPO · 20 TEM 2026</span><a href="${PROJECTS.profile.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="GitHub Profile README reposunu aç">Repo'yu aç ↗</a></div>
+          <h3 class="font-display text-xl font-bold text-white">${PROJECTS.profile.title}</h3>
+          <p class="mt-2 text-sm font-light leading-6 text-muted">${PROJECTS.profile.description}</p>
+          <div class="mt-4 flex items-center justify-between gap-3">
+            <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
+              ${PROJECTS.profile.tags.map((tag) => `<span class="rounded bg-white/5 px-2 py-1">${tag}</span>`).join("")}
+            </div>
+            <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="profile">Detaylar</button>
+          </div>
+        </div>
+      `;
+    }
+  };
+
+  syncProjectContent();
+
   /* ---------- Türkçe / English ---------- */
   const languageButton = $("#language-button");
   const mobileLanguageButton = $("#mobile-language-button");
@@ -127,7 +232,7 @@
   }
 
   /* ---------- Scroll reveal ---------- */
-  const revealEls = $$("[data-reveal]");
+  const revealEls = $$('[data-reveal]');
 
   if (revealEls.length) {
     const io = new IntersectionObserver(
@@ -148,7 +253,7 @@
   }
 
   /* ---------- Sayaçlar (data-count) ---------- */
-  const counters = $$("[data-count]");
+  const counters = $$('[data-count]');
 
   if (counters.length) {
     const runCount = (el) => {
@@ -214,7 +319,7 @@
     requestAnimationFrame(tick);
   };
 
-  $$("[data-scramble]").forEach((el) => {
+  $$('[data-scramble]').forEach((el) => {
     scramble(el);
     el.addEventListener("pointerenter", () => scramble(el));
   });
@@ -419,13 +524,13 @@
 
   /* ---------- 3D tilt + parlama (yumuşatılmış) ---------- */
   if (finePointer && !reduceMotion) {
-    $$("[data-tilt]").forEach((card) => {
+    $$('[data-tilt]').forEach((card) => {
       const glare = doc.createElement("span");
       glare.className = "glare";
       card.append(glare);
 
-      let tx = 0, ty = 0;       // hedef açılar
-      let cx = 0, cy = 0;       // mevcut açılar
+      let tx = 0, ty = 0;
+      let cx = 0, cy = 0;
       let hover = false;
       let raf = 0;
 
@@ -468,7 +573,7 @@
 
   /* ---------- Manyetik butonlar ---------- */
   if (finePointer && !reduceMotion) {
-    $$("[data-magnetic]").forEach((btn) => {
+    $$('[data-magnetic]').forEach((btn) => {
       let tx = 0, ty = 0;
       let cx = 0, cy = 0;
       let raf = 0;
@@ -521,7 +626,7 @@
     }
   };
 
-  $$("[data-confetti]").forEach((el) => {
+  $$('[data-confetti]').forEach((el) => {
     el.addEventListener("click", (e) => burst(e.clientX, e.clientY));
   });
 
@@ -544,7 +649,7 @@
   };
 
   /* ---------- E-posta kopyalama ---------- */
-  $$("[data-copy]").forEach((el) => {
+  $$('[data-copy]').forEach((el) => {
     el.addEventListener("click", async (e) => {
       e.preventDefault();
       try {
@@ -574,10 +679,11 @@
   /* ---------- Proje detay modalı ---------- */
   const projectModal = $("#project-modal");
   const projectData = {
-    moderation: { kicker: "Discord bot · aktif", title: "Oirat Moderation", description: "Oirat sunucusunun günlük düzenini görünmez bir yardımcı gibi ayakta tutan moderasyon sistemi.", problem: "Yoğun toplulukta kuralları hızlı ve tutarlı uygulamak.", solution: "Uyarı, susturma, otomatik kural ve detaylı log akışlarını tek bir botta birleştirmek.", tags: ["Discord.js", "Node.js", "MongoDB"], status: "● Aktif geliştirme" },
-    guard: { kicker: "Discord bot · aktif", title: "Oirat Guard", description: "Raid, spam ve sahte hesaplara karşı sunucunun kapısında bekleyen güvenlik botu.", problem: "Kötü niyetli girişleri moderatörlerden önce tespit etmek.", solution: "Anti-raid, anti-spam ve sahte hesap filtrelerini Redis destekli hızlı kontrollerle çalıştırmak.", tags: ["Discord.js", "TypeScript", "Redis"], status: "● Koruma aktif" },
+    portfolio: { kicker: PROJECTS.portfolio.kicker, title: PROJECTS.portfolio.title, description: PROJECTS.portfolio.description, problem: PROJECTS.portfolio.problem, solution: PROJECTS.portfolio.solution, tags: PROJECTS.portfolio.tags, status: PROJECTS.portfolio.status, link: PROJECTS.portfolio.link },
+    profile: { kicker: PROJECTS.profile.kicker, title: PROJECTS.profile.title, description: PROJECTS.profile.description, problem: PROJECTS.profile.problem, solution: PROJECTS.profile.solution, tags: PROJECTS.profile.tags, status: PROJECTS.profile.status, link: PROJECTS.profile.link },
   };
   const modalFields = { kicker: $("#project-modal-kicker"), title: $("#project-modal-title"), description: $("#project-modal-description"), problem: $("#project-modal-problem"), solution: $("#project-modal-solution"), tags: $("#project-modal-tags"), status: $("#project-modal-status") };
+  const modalLink = projectModal?.querySelector('a[href^="https://github.com/"]');
   let lastProjectTrigger = null;
   const closeProjectModal = () => { projectModal?.classList.add("hidden"); projectModal?.classList.remove("flex"); lastProjectTrigger?.focus(); };
   const openProjectModal = (key, trigger) => {
@@ -586,6 +692,11 @@
     lastProjectTrigger = trigger;
     Object.entries(modalFields).forEach(([field, el]) => { if (field !== "tags" && el) el.textContent = data[field]; });
     if (modalFields.tags) { modalFields.tags.innerHTML = ""; data.tags.forEach((tag) => { const el = doc.createElement("span"); el.className = "rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint"; el.textContent = tag; modalFields.tags.append(el); }); }
+    if (modalLink) {
+      modalLink.href = data.link;
+      modalLink.textContent = "Repo'yu aç ↗";
+      modalLink.setAttribute("aria-label", `${data.title} reposunu aç`);
+    }
     projectModal.classList.remove("hidden"); projectModal.classList.add("flex"); $("#project-modal-close")?.focus();
   };
   $$(".project-details").forEach((button) => button.addEventListener("click", () => openProjectModal(button.dataset.project, button)));
@@ -594,7 +705,7 @@
   addEventListener("keydown", (e) => { if (e.key === "Escape" && projectModal && !projectModal.classList.contains("hidden")) closeProjectModal(); });
 
   /* ---------- Proje filtreleri ---------- */
-  const projectFilters = $$("[data-filter]");
+  const projectFilters = $$('[data-filter]');
   const projectCards = $$('[data-project-category]');
   const projectCount = $("#project-count");
 
@@ -667,8 +778,8 @@
       { label: "Türkçeye geç", hint: "dil", run: () => setLanguage("tr") },
       { label: "Yüksek kontrast temasına geç", hint: "tema", run: () => setTheme("contrast") },
       { label: "Yumuşak temaya geç", hint: "tema", run: () => setTheme("soft") },
-      { label: "Oirat Moderation detaylarını aç", hint: "proje", run: () => openProjectModal("moderation") },
-      { label: "Oirat Guard detaylarını aç", hint: "proje", run: () => openProjectModal("guard") },
+      { label: "MCD.dev repo detaylarını aç", hint: "proje", run: () => openProjectModal("portfolio") },
+      { label: "GitHub profile README detaylarını aç", hint: "proje", run: () => openProjectModal("profile") },
       { label: "Hizmetler bölümüne git", hint: "bölüm", run: () => goTo("#services") },
       { label: "Konfeti patlat", hint: "eğlence", run: () => burst(innerWidth / 2, innerHeight / 3, 20) },
       {
@@ -790,21 +901,21 @@
     };
 
     const COMMANDS = {
-      help: () => print("komutlar: whoami · projects · filter <tümü|bot> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
+      help: () => print("komutlar: whoami · projects · filter <tümü|web|profil> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
       whoami: () => print("MCD (mcd4hell) — full-stack developer, Oirat kurucusu. TypeScript sever, bug'larla pazarlık eder."),
       projects: () => {
-        print("• Oirat Moderation — Oirat sunucusunun düzen botu (uyarı, susturma, log)");
-        print("• Oirat Guard      — anti-raid & anti-spam güvenlik botu");
-        print("gerisi gizli-planlar/ klasöründe 🤫", "text-muted");
+        print("• MCD.dev          — açık kaynak portföy sitesi");
+        print("• GitHub README    — profil vitrini, stack ve istatistikler");
+        print("private tarafta botlar hâlâ iş başında 🤫", "text-muted");
       },
       filter: (value) => {
-        const aliases = { tümü: "all", all: "all", bot: "bot", web: "web", araç: "tool", tool: "tool" };
+        const aliases = { tümü: "all", all: "all", web: "web", profil: "profile", profile: "profile" };
         const key = aliases[value?.toLocaleLowerCase("tr-TR") || "all"];
         const button = key && $(`[data-filter="${key}"]`);
         if (button) {
           button.click();
           print(`proje filtresi: ${value}`);
-        } else print("kullanım: filter tümü | bot | web | araç", "text-muted");
+        } else print("kullanım: filter tümü | web | profil", "text-muted");
       },
       stack: () => print("TypeScript · React · Next.js · Node.js · Tailwind · PostgreSQL · Docker"),
       oirat: () => {
@@ -833,7 +944,7 @@
         doc.body.classList.toggle("party");
         print(doc.body.classList.contains("party") ? "🎉 parti modu: AÇIK" : "parti modu: kapalı. işe dönüyoruz.");
       },
-      ls: () => print("projeler/  setup/  gizli-planlar/  bitmemis-yan-projeler/  (247 öğe)"),
+      ls: () => print("projeler/  github-profile/  setup/  private-lab/  (247 öğe)"),
       date: () => print(new Date().toLocaleString("tr-TR")),
       clear: () => {
         termOut.innerHTML = "";
