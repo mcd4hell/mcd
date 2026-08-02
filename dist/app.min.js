@@ -23,7 +23,7 @@
       kicker: "Web · public repo",
       problem: "Portföyü süslü laflarla değil, hızlı açılan ve net okunan içerikle ayakta tutmak.",
       solution: "Tek sayfada güçlü görsel dil, hafif etkileşimler ve günlük GitHub senkronuyla yaşayan bir vitrin kurmak.",
-      status: "● Public repo · 31 Tem 2026 güncellendi",
+      status: "● Public repo · 1 Ağu 2026 güncellendi",
     },
     profile: {
       category: "profile",
@@ -67,11 +67,11 @@
               <p class="font-semibold text-white">Portföy commit'i</p>
               <p class="mt-1 text-white/60">tek sayfa · canlı etkileşim · repo senkronu</p>
             </div>
-            <p class="mt-3 text-[10px] text-white/40">✓ açık kaynak · son güncelleme 31 Tem 2026</p>
+            <p class="mt-3 text-[10px] text-white/40">✓ açık kaynak · son güncelleme 1 Ağu 2026</p>
           </div>
         </div>
         <div class="relative p-3 pb-2 pt-5">
-          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-mint/20 px-2 py-1 text-[10px] font-semibold text-mint">PUBLIC REPO · 31 TEM 2026</span><a href="${PROJECTS.portfolio.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD.dev reposunu aç">Repo'yu aç ↗</a></div>
+          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-mint/20 px-2 py-1 text-[10px] font-semibold text-mint">PUBLIC REPO · 1 AĞU 2026</span><a href="${PROJECTS.portfolio.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD.dev reposunu aç">Repo'yu aç ↗</a></div>
           <h3 class="font-display text-xl font-bold text-white">${PROJECTS.portfolio.title}</h3>
           <p class="mt-2 text-sm font-light leading-6 text-muted">${PROJECTS.portfolio.description}</p>
           <div class="mt-4 flex items-center justify-between gap-3">
