@@ -1,3 +1,4 @@
+/* MCD.dev — kaynak script (dist/app.min.js üretilir) */
 (() => {
   "use strict";
 
@@ -208,7 +209,7 @@
   }
 
   /* ---------- Scrollspy: aktif bölümü menüde işaretle ---------- */
-  const navLinks = $(".nav-link[href^='#']");
+  const navLinks = $$(".nav-link[href^='#']");
 
   if (navLinks.length) {
     const sections = navLinks
