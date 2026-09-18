@@ -16,7 +16,7 @@ Discord'dan ilham alan, tek sayfalık kişisel portföy sitesi. Selam, ben MCD! 
 - 🎉 **Konfeti efekti** — tıkla ve kutla!
 - 🔀 **Text scramble** — yazılar karışıp çözülerek geliyor
 - 🕹️ **Konami kodu sürprizi** — ↑ ↑ ↓ ↓ ← → ← → B A 😉
-- 📡 **Canlı GitHub repo alanı** — profilin güncel repolarını GitHub API'den listeler
+- 🧩 **Kaynak/derleme ayrımı** — okunabilir kaynak dosyaları ve yayın çıktıları birlikte tutulur
 - 📱 **Tam responsive** — mobil hamburger menü dahil
 
 ## 🗂️ Bölümler
@@ -40,7 +40,6 @@ Discord'dan ilham alan, tek sayfalık kişisel portföy sitesi. Selam, ben MCD! 
 - ⚡ **Tailwind CSS (CDN)** — özel renk paleti ve utility-first arayüz
 - 🔤 **Google Fonts** — Montserrat & Poppins
 - 🍦 **Vanilla JavaScript** — framework yok, saf efekt ve etkileşim
-- 📡 **GitHub API** — profil repolarını canlı göstermek için
 
 ## 📁 Proje Yapısı
 
@@ -49,7 +48,7 @@ mcd/
 ├── 📄 index.html        # Ana sayfa
 ├── 📂 src/              # Kaynak dosyalar
 │   ├── app.js           # Etkileşim, içerik ve animasyonlar
-│   ├── enhanced.js      # Canlı GitHub repo alanı
+│   ├── enhanced.js      # Ayrı canlı GitHub alanı kaynağı
 │   └── styles.css       # Özel stiller
 ├── 📂 dist/             # Yayın için kullanılan çıktılar
 │   ├── app.min.js
