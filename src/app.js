@@ -289,7 +289,7 @@
   }
 
   /* ---------- Yazı scramble efekti ---------- */
-  const GLYPHS = "!<>-_/\\/[]{}—=+*^?#$%&";
+  const GLYPHS = "!<>-_\/[]{}—=+*^?#$%&";
 
   const scramble = (el) => {
     const original = el.dataset.text || el.textContent;
