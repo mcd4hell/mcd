@@ -289,7 +289,7 @@
   }
 
   /* ---------- Yazı scramble efekti ---------- */
-  const GLYPHS = "!<>-_\/[]{}—=+*^?#$%&";
+  const GLYPHS = "!<>-_\\/[]{}—=+*^?#$%&";
 
   const scramble = (el) => {
     const original = el.dataset.text || el.textContent;
@@ -1082,6 +1082,6 @@
   console.log(
     "%c MCD.dev %c selam, kaynağa bakan meraklı 👀 — ↑↑↓↓←→←→BA dene ",
     "background:#58f2aa;color:#04120b;font-weight:bold;border-radius:4px 0 0 4px;padding:4px 8px",
-    "background:#161a26;color:#dbe0e6;border-radius:0 4px 4px 0;padding:4px 8px"
+    "background:#161a26;color:#dbe0e6;border-radius:0 4px 0 4px;padding:4px 8px"
   );
 })();
