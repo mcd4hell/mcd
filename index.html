@@ -81,7 +81,7 @@
     <script src="dist/app.min.js" defer></script>
   </head>
   <body class="min-h-screen overflow-x-hidden font-sans text-ink antialiased">
-    <a href="#home" class="skip-link">İçeriğe atla</a>
+    <a href="#home" class="skip-link" data-i18n="skip">İçeriğe atla</a>
 
     <canvas id="starfield" aria-hidden="true"></canvas>
     <div id="scroll-progress" aria-hidden="true"></div>
@@ -106,18 +106,18 @@
         </a>
 
         <div class="relative hidden items-center gap-1 rounded-xl bg-black/15 p-1 text-sm md:flex">
-          <a href="#about" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white"># hakkımda</a>
-          <a href="#projects" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white"># projeler</a>
-          <a href="#setup" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white"># setup</a>
-          <a href="#terminal" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white"># terminal</a>
-          <a href="#contact" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white"># iletişim</a>
+          <a href="#about" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white" data-i18n="about"># hakkımda</a>
+          <a href="#projects" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white" data-i18n="projects"># projeler</a>
+          <a href="#setup" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white" data-i18n="setup"># setup</a>
+          <a href="#terminal" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white" data-i18n="terminal"># terminal</a>
+          <a href="#contact" class="nav-link rounded-lg px-4 py-2 text-muted transition hover:bg-white/10 hover:text-white" data-i18n="contact"># iletişim</a>
         </div>
 
         <div class="hidden items-center gap-2 lg:flex">
-          <button id="language-button" type="button" aria-label="Dili İngilizceye çevir" class="language-button rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold text-muted transition hover:bg-white/20 hover:text-white"><span class="language-option is-active">TR</span><span class="mx-1 text-white/20">/</span><span class="language-option">EN</span></button>
-          <button id="theme-button" type="button" aria-label="Tema seçimini aç" class="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-sm text-muted transition hover:bg-white/20 hover:text-white">◐</button>
-          <button id="palette-button" type="button" aria-label="Komut paletini aç" class="items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs text-muted transition hover:bg-white/20 hover:text-white lg:flex">
-            ara / komut
+          <button id="language-button" type="button" class="language-button rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold text-muted transition hover:bg-white/20 hover:text-white" data-i18n-aria="langBtnAria"><span class="language-option is-active">TR</span><span class="mx-1 text-white/20">/</span><span class="language-option">EN</span></button>
+          <button id="theme-button" type="button" class="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-sm text-muted transition hover:bg-white/20 hover:text-white">◐</button>
+          <button id="palette-button" type="button" data-i18n-aria="paletteAria" class="items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs text-muted transition hover:bg-white/20 hover:text-white lg:flex">
+            <span data-i18n="skill">ara / komut</span>
             <kbd class="rounded bg-black/30 px-1.5 py-0.5 font-sans text-[10px]">Ctrl K</kbd>
           </button>
         </div>
@@ -127,10 +127,10 @@
             <span class="absolute h-full w-full animate-ping rounded-full bg-[#04180f]/50"></span>
             <span class="relative h-2 w-2 rounded-full bg-[#04180f]"></span>
           </span>
-          Mesaj at
+          <span data-i18n="message">Mesaj at</span>
         </a>
 
-        <button id="menu-button" type="button" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="mobile-menu" class="relative grid h-10 w-10 place-items-center rounded-xl bg-white/10 transition hover:bg-white/20 md:hidden">
+        <button id="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-i18n-aria="menuAria" class="relative grid h-10 w-10 place-items-center rounded-xl bg-white/10 transition hover:bg-white/20 md:hidden">
           <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" aria-hidden="true">
             <path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
           </svg>
@@ -141,23 +141,23 @@
         <div>
           <div class="p-3">
             <button id="mobile-language-button" type="button" class="language-button mb-2 w-full rounded-xl bg-white/10 px-4 py-3 text-left text-xs font-semibold text-muted">Türkçe / English</button>
-            <a href="#about" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10"># hakkımda</a>
-            <a href="#projects" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10"># projeler</a>
-            <a href="#setup" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10"># setup</a>
-            <a href="#terminal" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10"># terminal</a>
-            <a href="#contact" class="mobile-link mt-2 block rounded-xl bg-mint px-4 py-3 font-semibold text-[#04180f]">Mesaj at</a>
+            <a href="#about" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10" data-i18n="about"># hakkımda</a>
+            <a href="#projects" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10" data-i18n="projects"># projeler</a>
+            <a href="#setup" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10" data-i18n="setup"># setup</a>
+            <a href="#terminal" class="mobile-link block rounded-xl px-4 py-3 hover:bg-white/10" data-i18n="terminal"># terminal</a>
+            <a href="#contact" data-i18n="message" class="mobile-link mt-2 block rounded-xl bg-mint px-4 py-3 font-semibold text-[#04180f]">Mesaj at</a>
           </div>
         </div>
       </div>
     </header>
 
     <!-- ======== KOMUT PALETİ (Ctrl+K) ======== -->
-    <div id="palette" class="fixed inset-0 z-[90] hidden items-start justify-center px-4 pt-[16vh]" role="dialog" aria-modal="true" aria-label="Komut paleti">
+    <div id="palette" class="fixed inset-0 z-[90] hidden items-start justify-center px-4 pt-[16vh]" role="dialog" aria-modal="true" data-i18n-aria="paletteAria">
       <div id="palette-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       <div class="glass relative w-full max-w-lg overflow-hidden rounded-2xl">
         <div class="flex items-center gap-3 border-b border-white/10 px-4">
           <span class="text-mint">›</span>
-          <input id="palette-input" type="text" placeholder="Komut yaz ya da ara..." autocomplete="off" spellcheck="false" class="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-muted">
+          <input id="palette-input" type="text" autocomplete="off" spellcheck="false" data-i18n-placeholder="palettePh" class="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-muted">
           <kbd class="rounded bg-white/10 px-1.5 py-0.5 text-[10px] text-muted">esc</kbd>
         </div>
         <ul id="palette-list" class="max-h-72 overflow-y-auto p-2 text-sm"></ul>
@@ -171,37 +171,37 @@
           <div>
             <div data-reveal class="mb-6 inline-flex -rotate-1 items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2 text-xs shadow-liquid backdrop-blur-xl">
               <span class="relative flex h-2.5 w-2.5">
-                <span class="absolute h-full w-full animate-ping rounded-full bg-online opacity-60"></span>
-                <span class="relative h-2.5 w-2.5 rounded-full bg-online"></span>
+                <span id="hero-status-ping" class="absolute h-full w-full animate-ping rounded-full bg-online opacity-60"></span>
+                <span id="hero-status-dot" class="relative h-2.5 w-2.5 rounded-full bg-online" data-presence="online"></span>
               </span>
               <span id="hero-status">online, muhtemelen kod yazıyor</span><span class="animate-pulse text-mint">▍</span>
             </div>
 
             <h1 data-reveal class="font-display text-[clamp(3.7rem,9vw,7.6rem)] font-extrabold leading-[0.88] tracking-[-0.07em] text-white">
-              selam, ben
+              <span data-i18n="heroHi">selam, ben</span>
               <span data-scramble class="gradient-flow block bg-gradient-to-r from-mint via-aqua to-grape bg-clip-text text-transparent">MCD.</span>
             </h1>
-            <p data-reveal class="mt-7 max-w-xl text-base font-light leading-8 text-[#b5bac1] sm:text-lg">
+            <p data-reveal class="mt-7 max-w-xl text-base font-light leading-8 text-[#b5bac1] sm:text-lg" data-i18n="heroDesc">
               İnternette bir şeyler tasarlayan, kodlayan ve arada sırada bozan full-stack developer. Temiz kod severim ama kahvem kadar ciddi değilim.
             </p>
 
             <div data-reveal class="mt-9 flex flex-wrap gap-3">
-              <a href="#projects" data-magnetic class="rounded-xl bg-mint px-6 py-3.5 text-sm font-semibold text-[#04180f] shadow-xl shadow-mint/25 transition hover:bg-[#7cf7bd]">Yaptıklarıma bak</a>
-              <a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" data-magnetic class="glass rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/15">GitHub'a ışınlan ↗</a>
+              <a href="#projects" data-magnetic data-i18n="ctaWork" class="rounded-xl bg-mint px-6 py-3.5 text-sm font-semibold text-[#04180f] shadow-xl shadow-mint/25 transition hover:bg-[#7cf7bd]">Yaptıklarıma bak</a>
+              <a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" data-magnetic data-i18n="ctaGitHub" class="glass rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/15">GitHub'a ışınlan ↗</a>
             </div>
 
             <div data-reveal class="mt-10 grid max-w-md grid-cols-3 gap-3">
               <div class="glass rounded-2xl p-4 text-center">
-                <p class="font-display text-2xl font-extrabold text-mint"><span data-count="3" data-suffix="">0</span></p>
-                <p class="mt-1 text-[11px] text-muted">açık repo</p>
+                <p class="font-display text-2xl font-extrabold text-mint"><span data-count="8" data-suffix="+">0</span></p>
+                <p class="mt-1 text-[11px] text-muted" data-i18n="statExp">yıl deneyim</p>
               </div>
               <div class="glass rounded-2xl p-4 text-center">
-                <p class="font-display text-2xl font-extrabold text-aqua"><span data-count="1" data-suffix="">0</span></p>
-                <p class="mt-1 text-[11px] text-muted">canlı portföy</p>
+                <p class="font-display text-2xl font-extrabold text-aqua"><span data-count="30" data-suffix="+">0</span></p>
+                <p class="mt-1 text-[11px] text-muted" data-i18n="statProj">tamamlanan proje</p>
               </div>
               <div class="glass rounded-2xl p-4 text-center">
                 <p class="font-display text-2xl font-extrabold text-grape">∞</p>
-                <p class="mt-1 text-[11px] text-muted">içilen kahve</p>
+                <p class="mt-1 text-[11px] text-muted" data-i18n="statCoffee">içilen kahve</p>
               </div>
             </div>
 
@@ -211,7 +211,7 @@
                 <span class="grid h-8 w-8 place-items-center rounded-full border-2 border-night bg-cyan-400 text-[10px] font-bold text-[#09212a]">RE</span>
                 <span class="grid h-8 w-8 place-items-center rounded-full border-2 border-night bg-emerald-400 text-[10px] font-bold text-[#092119]">NO</span>
               </div>
-              TypeScript, React, Node.js ve bolca Ctrl+Z
+              <span data-i18n="heroStack">TypeScript, React, Node.js ve bolca Ctrl+Z</span>
             </div>
           </div>
 
@@ -219,11 +219,15 @@
           <div data-reveal class="relative mx-auto w-full max-w-lg lg:mx-0">
             <div data-tilt class="glass liquid rotate-[1.5deg] rounded-[2rem] p-3 shadow-2xl shadow-mint/10">
               <div class="relative overflow-hidden rounded-[1.45rem] bg-[#161a26]/85">
-                <div class="h-28 bg-gradient-to-r from-mint via-aqua to-grape"></div>
+                <div id="discord-banner" class="h-28 bg-gradient-to-r from-mint via-aqua to-grape"></div>
+                <span class="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-black/25 backdrop-blur-xl" title="Discord">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5 fill-white" aria-hidden="true"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                </span>
                 <div class="px-5 pb-5">
                   <div class="-mt-11 flex items-end justify-between">
                     <div data-confetti class="relative h-24 w-24 cursor-pointer overflow-hidden rounded-full border-[7px] border-[#161a26] bg-gradient-to-br from-mint to-aqua">
                       <img
+                        id="discord-avatar"
                         src="./jensen.jpg"
                         alt="MCD avatarı"
                         width="96"
@@ -232,48 +236,75 @@
                         decoding="async"
                         class="h-full w-full object-cover"
                       >
-                      <span class="absolute bottom-0 right-0 h-6 w-6 rounded-full border-[5px] border-[#161a26] bg-online"></span>
+                      <span id="presence-dot" class="absolute bottom-0 right-0 h-6 w-6 rounded-full border-[5px] border-[#161a26]" data-presence="online"></span>
                     </div>
-                    <button type="button" data-confetti class="mb-1 rounded-lg bg-mint px-4 py-2 text-xs font-semibold text-[#04180f] transition hover:bg-[#7cf7bd]">Arkadaş ekle</button>
+                    <button type="button" data-confetti data-i18n="cardAddFriend" class="mb-1 rounded-lg bg-mint px-4 py-2 text-xs font-semibold text-[#04180f] transition hover:bg-[#7cf7bd]">Arkadaş ekle</button>
                   </div>
 
                   <div class="mt-3 flex items-end justify-between">
                     <div>
-                      <h2 class="font-display text-2xl font-bold text-white">MCD</h2>
-                      <p class="text-sm text-[#b5bac1]">vyserizz</p>
+                      <div class="flex items-center gap-2">
+                        <h2 id="discord-name" class="font-display text-2xl font-bold text-white">MCD</h2>
+                        <span id="discord-guild-tag" class="hidden rounded-md bg-[#252a3a] px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#b5bac1]">ꙔRAT</span>
+                      </div>
+                      <p id="discord-username" class="text-sm text-[#b5bac1]">vyserizz</p>
+                      <p id="discord-custom-status" class="mt-0.5 hidden text-xs text-white/75"></p>
+                      <p id="presence-text" class="mt-1 text-xs text-muted">online</p>
                     </div>
-                    <p class="text-xs text-muted">🕐 <span id="local-clock">--:--</span> · İstanbul</p>
+                    <p class="text-xs text-muted">🕐 <span id="local-clock">--:--</span> · <span data-i18n="city">İstanbul</span></p>
+                  </div>
+
+                  <div id="spotify-widget" class="mt-4 hidden overflow-hidden rounded-xl bg-black/25">
+                    <div class="flex items-center gap-3 p-3">
+                      <img id="spotify-album-art" src="" alt="Spotify albüm kapağı" width="48" height="48" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-lg object-cover">
+                      <div class="min-w-0 flex-1">
+                        <p id="spotify-song" class="truncate text-xs font-semibold text-white">—</p>
+                        <p id="spotify-artist" class="truncate text-[11px] text-muted">—</p>
+                        <div class="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-white/10">
+                          <div id="spotify-progress" class="h-full w-0 rounded-full bg-online"></div>
+                        </div>
+                        <div class="mt-1 flex items-center justify-between text-[10px] text-muted">
+                          <span id="spotify-elapsed">0:00</span>
+                          <span class="font-bold text-online">🎧 Spotify</span>
+                          <span id="spotify-total">0:00</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="mt-5 rounded-xl bg-black/20 p-4 text-sm">
-                    <p class="mb-2 text-[11px] font-bold uppercase text-muted">Hakkımda</p>
-                    <p class="leading-6">Kafamdaki pikselleri ekrana koyuyorum. Bazen backend de yazıyorum. ☕</p>
-                    <p class="mt-4 text-[11px] font-bold uppercase text-muted">Üyelik tarihi</p>
-                    <p class="mt-1 text-xs">İnternetin eski ve güzel zamanları</p>
+                    <p class="mb-2 text-[11px] font-bold uppercase text-muted" data-i18n="cardAbout">Hakkımda</p>
+                    <p id="discord-bio" class="leading-6">
+                      We're on the borderline<br>
+                      🩻<br>
+                      <a href="https://mcd4hell.github.io/mcd" target="_blank" rel="noopener noreferrer" class="text-[#00a8fc] transition hover:underline">https://mcd4hell.github.io/mcd</a>
+                    </p>
+                    <p class="mt-4 text-[11px] font-bold uppercase text-muted" data-i18n="cardMember">Üyelik tarihi</p>
+                    <p id="discord-created" class="mt-1 text-xs" data-i18n="cardMemberText">İnternetin eski ve güzel zamanları</p>
                   </div>
 
                   <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]">🎮 developer</span>
-                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]">⚔️ oirat kurucusu</span>
-                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]">🎧 tame impala enjoyer</span>
-                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]">🌙 night owl</span>
+                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]" data-i18n="badgeDev">🎮 developer</span>
+                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]" data-i18n="badgeFounder">⚔️ oirat kurucusu</span>
+                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]" data-i18n="badgeMusic">🎧 tame impala enjoyer</span>
+                    <span class="rounded-md bg-[#252a3a] px-2.5 py-1.5 text-[11px]" data-i18n="badgeOwl">🌙 night owl</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="glass absolute -bottom-7 -left-5 hidden -rotate-3 items-center gap-3 rounded-2xl px-4 py-3 text-xs shadow-xl sm:flex">
               <span class="grid h-9 w-9 place-items-center rounded-xl bg-online/20 text-lg">✓</span>
-              <span><b class="block text-white">Build başarılı</b>hiç şüphemiz yoktu</span>
+              <span><b class="block text-white" data-i18n="buildBadgeTitle">Build başarılı</b><span data-i18n="buildBadgeText">hiç şüphemiz yoktu</span></span>
             </div>
             <div class="glass absolute -right-4 -top-5 hidden rotate-3 items-center gap-2 rounded-2xl px-4 py-3 text-xs shadow-xl lg:flex">
               <span class="text-lg">⚔️</span>
-              <span><b class="block text-white">Oirat</b>sunucu kurucusu</span>
+              <span><b class="block text-white">Oirat</b><span data-i18n="oiratBadgeText">sunucu kurucusu</span></span>
             </div>
           </div>
         </div>
 
         <a href="#about" aria-label="Aşağı kaydır" class="scroll-hint absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-[10px] uppercase tracking-widest text-muted transition hover:text-white md:flex">
-          kaydır
+          <span data-i18n="scrollHint">kaydır</span>
           <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </section>
@@ -290,7 +321,7 @@
       <section id="about" aria-label="MCD hakkında" class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <div data-reveal class="mb-10 flex items-center gap-3">
           <span class="text-2xl text-muted">#</span>
-          <h2 class="font-display text-3xl font-bold text-white">hakkımda</h2>
+          <h2 class="font-display text-3xl font-bold text-white" data-i18n="aboutHeading">hakkımda</h2>
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
 
@@ -299,21 +330,21 @@
             <aside aria-label="Sunucu kanalları" class="hidden border-r border-white/[0.08] bg-black/10 p-4 lg:block">
               <p class="mb-3 px-2 text-[11px] font-semibold uppercase text-muted">Oirat</p>
               <div class="space-y-1 text-sm">
-                <p class="rounded-lg bg-white/10 px-3 py-2 text-white"># genel</p>
-                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5"># kahve-molası</p>
-                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5"># kod-yardım</p>
-                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5">🔊 tame impala radio</p>
+                <p class="rounded-lg bg-white/10 px-3 py-2 text-white" data-i18n="chanGenel"># genel</p>
+                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5" data-i18n="chanKahve"># kahve-molası</p>
+                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5" data-i18n="chanKod"># kod-yardım</p>
+                <p class="rounded-lg px-3 py-2 text-muted transition hover:bg-white/5" data-i18n="chanRadio">🔊 tame impala radio</p>
               </div>
             </aside>
 
             <div id="chat-thread" class="py-4">
-              <div class="border-b border-white/[0.08] px-5 pb-4 text-sm font-semibold text-white"># genel <span class="ml-2 font-normal text-muted">MCD hakkında birkaç şey</span></div>
+              <div class="border-b border-white/[0.08] px-5 pb-4 text-sm font-semibold text-white"># genel <span class="ml-2 font-normal text-muted" data-i18n="threadName">MCD hakkında birkaç şey</span></div>
 
               <div class="chat-message message flex gap-4 px-5 py-5 transition">
                 <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-mint to-aqua font-bold text-[#04180f]">M</div>
                 <div>
-                  <p><b class="text-white">MCD</b> <span class="ml-1 text-[11px] text-muted">Bugün 14:32</span></p>
-                  <p class="mt-1 max-w-2xl text-sm font-light leading-7 text-ink">Benim için iyi bir web sitesi sadece güzel görünen bir şey değil; hızlı, kolay ve kullanırken küçük sürprizler bırakan bir yer.</p>
+                  <p><b class="text-white">MCD</b> <span class="ml-1 text-[11px] text-muted" data-i18n="chatTime1">Bugün 14:32</span></p>
+                  <p class="mt-1 max-w-2xl text-sm font-light leading-7 text-ink" data-i18n="chatMsg1">Benim için iyi bir web sitesi sadece güzel görünen bir şey değil; hızlı, kolay ve kullanırken küçük sürprizler bırakan bir yer.</p>
                   <div class="mt-3 inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1 text-xs">✨ <span>12</span></div>
                 </div>
               </div>
@@ -321,12 +352,12 @@
               <div class="chat-message message flex gap-4 px-5 py-5 transition">
                 <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#252a3a] text-xl">🤖</div>
                 <div>
-                  <p><b class="text-[#f0b232]">mcd.bot</b> <span class="ml-1 rounded bg-mint px-1 text-[9px] font-bold text-[#04180f]">BOT</span> <span class="ml-1 text-[11px] text-muted">Bugün 14:33</span></p>
-                  <p class="mt-1 text-sm leading-7">Uzmanlık alanları bulundu:</p>
+                  <p><b class="text-[#f0b232]">mcd.bot</b> <span class="ml-1 rounded bg-mint px-1 text-[9px] font-bold text-[#04180f]">BOT</span> <span class="ml-1 text-[11px] text-muted" data-i18n="chatTime2">Bugün 14:33</span></p>
+                  <p class="mt-1 text-sm leading-7" data-i18n="chatMsg2">Uzmanlık alanları bulundu:</p>
                   <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint">Frontend büyüsü</span>
-                    <span class="rounded-lg bg-grape/15 px-3 py-2 text-xs text-[#c3baff]">Backend işleri</span>
-                    <span class="rounded-lg bg-aqua/15 px-3 py-2 text-xs text-aqua">UI detayları</span>
+                    <span class="rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint" data-i18n="chipFront">Frontend büyüsü</span>
+                    <span class="rounded-lg bg-grape/15 px-3 py-2 text-xs text-[#c3baff]" data-i18n="chipBack">Backend işleri</span>
+                    <span class="rounded-lg bg-aqua/15 px-3 py-2 text-xs text-aqua" data-i18n="chipUI">UI detayları</span>
                   </div>
                 </div>
               </div>
@@ -334,23 +365,23 @@
               <div class="chat-message message flex gap-4 px-5 py-5 transition">
                 <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-mint to-aqua font-bold text-[#04180f]">M</div>
                 <div>
-                  <p><b class="text-white">MCD</b> <span class="ml-1 text-[11px] text-muted">Bugün 14:35</span></p>
-                  <p class="mt-1 max-w-2xl text-sm font-light leading-7 text-ink">Bu arada Oirat'ın botlarını da ben yazıyorum — Moderation düzeni sağlıyor, Guard kapıda bekliyor. Sıradaki bot: belli olmaz 👀</p>
+                  <p><b class="text-white">MCD</b> <span class="ml-1 text-[11px] text-muted" data-i18n="chatTime3">Bugün 14:35</span></p>
+                  <p class="mt-1 max-w-2xl text-sm font-light leading-7 text-ink" data-i18n="chatMsg3">Bu arada Oirat'ın botlarını da ben yazıyorum — Moderation düzeni sağlıyor, Guard kapıda bekliyor. Sıradaki bot: belli olmaz 👀</p>
                 </div>
               </div>
 
               <div id="chat-typing" class="flex items-center gap-3 px-5 py-4 text-xs text-muted" style="transition: opacity .4s ease">
                 <span class="typing-dots"><i></i><i></i><i></i></span>
-                <span><b class="text-ink">mcd.bot</b> yazıyor...</span>
+                <span><b class="text-ink">mcd.bot</b> <span data-i18n="typingSuffix">yazıyor...</span></span>
               </div>
             </div>
 
             <aside aria-label="Çevrimiçi üyeler" class="hidden border-l border-white/[0.08] bg-black/10 p-4 lg:block">
-              <p class="mb-4 text-[11px] font-semibold uppercase text-muted">Çevrimiçi — 3</p>
+              <p class="mb-4 text-[11px] font-semibold uppercase text-muted" data-i18n="onlineMembers">Çevrimiçi — 3</p>
               <div class="space-y-4 text-xs">
-                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-mint to-aqua font-bold text-[#04180f]">M</span><span><b class="block text-mint">MCD</b>VS Code</span></div>
-                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-cyan-500 font-bold">T</span><span><b class="block text-white">TypeScript</b>hata buluyor</span></div>
-                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-amber-600 font-bold">K</span><span><b class="block text-white">Kahve</b>az kaldı</span></div>
+                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-mint to-aqua font-bold text-[#04180f]">M</span><span><b class="block text-mint">MCD</b><span id="member-mcd-status" data-i18n="memberMcdStatus">VS Code</span></span></div>
+                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-cyan-500 font-bold">T</span><span><b class="block text-white">TypeScript</b><span data-i18n="memberTsStatus">hata buluyor</span></span></div>
+                <div class="flex items-center gap-3"><span class="grid h-9 w-9 place-items-center rounded-full bg-amber-600 font-bold">K</span><span><b class="block text-white">Kahve</b><span data-i18n="memberCoffeeStatus">az kaldı</span></span></div>
               </div>
             </aside>
           </div>
@@ -358,29 +389,28 @@
 
         <div data-reveal class="glass liquid mt-5 rounded-[2rem] p-6">
           <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p class="text-sm font-semibold text-white">Kod ritmi ızgarası <span class="ml-2 text-xs font-normal text-muted">son 52 hafta, dekoratif</span></p>
-            <p class="text-xs text-muted"><span id="contrib-total" class="font-bold text-mint">0</span> aktif hücre</p>
+            <p class="text-sm font-semibold text-white"><span data-i18n="heatTitle">Commit ısı haritası</span> <span class="ml-2 text-xs font-normal text-muted" data-i18n="heatSub">son 52 hafta, gayet bilimsel</span></p>
+            <p class="text-xs text-muted"><span id="contrib-total" class="font-bold text-mint">0</span> <span data-i18n="heatUnit">commit</span></p>
           </div>
           <div id="contrib" class="grid grid-flow-col justify-start gap-[3px] overflow-x-auto pb-2" aria-hidden="true"></div>
           <div class="mt-3 flex items-center justify-end gap-1.5 text-[10px] text-muted">
-            az
+            <span data-i18n="heatLow">az</span>
             <i class="contrib-cell" data-level="0"></i><i class="contrib-cell" data-level="1"></i><i class="contrib-cell" data-level="2"></i><i class="contrib-cell" data-level="3"></i><i class="contrib-cell" data-level="4"></i>
-            çok
+            <span data-i18n="heatHigh">çok</span>
           </div>
         </div>
       </section>
-
       <!-- ======== HİZMETLER ======== -->
       <section id="services" aria-label="MCD hizmetleri" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div data-reveal class="mb-8 flex items-center gap-3">
           <span class="text-2xl text-muted">#</span>
-          <h2 class="font-display text-3xl font-bold text-white">ne yapıyorum</h2>
+          <h2 class="font-display text-3xl font-bold text-white" data-i18n="servicesHeading">ne yapıyorum</h2>
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
         <div class="grid gap-4 sm:grid-cols-3">
-          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">⚡</span><h3 class="mt-4 font-display font-bold text-white">Web deneyimleri</h3><p class="mt-2 text-sm leading-6 text-muted">Hızlı, responsive ve karakteri olan landing page'ler ve portföyler.</p></article>
-          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">🤖</span><h3 class="mt-4 font-display font-bold text-white">Bot & otomasyon</h3><p class="mt-2 text-sm leading-6 text-muted">Discord toplulukları için moderasyon, güvenlik ve iş akışı araçları.</p></article>
-          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">🧩</span><h3 class="mt-4 font-display font-bold text-white">Ürünleştirme</h3><p class="mt-2 text-sm leading-6 text-muted">Fikri netleştirip çalışan, bakımı kolay ve ölçülebilir bir ürüne dönüştürme.</p></article>
+          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">⚡</span><h3 class="mt-4 font-display font-bold text-white" data-i18n="svc1Title">Web deneyimleri</h3><p class="mt-2 text-sm leading-6 text-muted" data-i18n="svc1Text">Hızlı, responsive ve karakteri olan landing page'ler ve portföyler.</p></article>
+          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">🤖</span><h3 class="mt-4 font-display font-bold text-white" data-i18n="svc2Title">Bot & otomasyon</h3><p class="mt-2 text-sm leading-6 text-muted" data-i18n="svc2Text">Discord toplulukları için moderasyon, güvenlik ve iş akışı araçları.</p></article>
+          <article data-reveal class="glass rounded-2xl p-5"><span class="text-2xl">🧩</span><h3 class="mt-4 font-display font-bold text-white" data-i18n="svc3Title">Ürünleştirme</h3><p class="mt-2 text-sm leading-6 text-muted" data-i18n="svc3Text">Fikri netleştirip çalışan, bakımı kolay ve ölçülebilir bir ürüne dönüştürme.</p></article>
         </div>
       </section>
 
@@ -388,16 +418,16 @@
       <section id="projects" aria-label="MCD projeleri" class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <div data-reveal class="mb-10 flex items-center gap-3">
           <span class="text-2xl text-muted">#</span>
-          <h2 class="font-display text-3xl font-bold text-white">projeler</h2>
+          <h2 class="font-display text-3xl font-bold text-white" data-i18n="projectsHeading">projeler</h2>
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
 
         <div class="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-3" aria-label="Proje filtreleri">
           <div class="flex flex-wrap gap-2" role="group" aria-label="Projeleri filtrele">
-            <button type="button" class="project-filter is-active rounded-xl px-3 py-2 text-xs font-semibold text-white" data-filter="all" aria-pressed="true">Tümü</button>
-            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="bot" aria-pressed="false">Discord bot</button>
-            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="web" aria-pressed="false">Web</button>
-            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="tool" aria-pressed="false">Araç</button>
+            <button type="button" class="project-filter is-active rounded-xl px-3 py-2 text-xs font-semibold text-white" data-filter="all" aria-pressed="true"><span data-i18n="filterAll">Tümü</span></button>
+            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="bot" aria-pressed="false"><span data-i18n="filterBot">Discord bot</span></button>
+            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="web" aria-pressed="false"><span data-i18n="filterWeb">Web</span></button>
+            <button type="button" class="project-filter rounded-xl px-3 py-2 text-xs font-semibold text-muted" data-filter="tool" aria-pressed="false"><span data-i18n="filterTool">Araç</span></button>
           </div>
           <span id="project-count" class="text-xs text-muted">2 proje gösteriliyor</span>
         </div>
@@ -412,23 +442,23 @@
                   <p><b class="text-white">Oirat</b> <span class="ml-1 rounded bg-[#5865F2] px-1 text-[9px] font-bold text-white">BOT</span></p>
                 </div>
                 <div class="mt-3 rounded-lg border-l-4 border-mint bg-black/30 p-3 text-[11px]">
-                  <p class="font-semibold text-white">Moderasyon kaydı</p>
-                  <p class="mt-1 text-white/60">@troll42 susturuldu — sebep: spam · 10 dk</p>
+                  <p class="font-semibold text-white" data-i18n="p1LogTitle">Moderasyon kaydı</p>
+                  <p class="mt-1 text-white/60" data-i18n="p1LogText">@troll42 susturuldu — sebep: spam · 10 dk</p>
                 </div>
-                <p class="mt-3 text-[10px] text-white/40">✓ log kanalına iletildi</p>
+                <p class="mt-3 text-[10px] text-white/40" data-i18n="p1LogOk">✓ log kanalına iletildi</p>
               </div>
             </div>
             <div class="relative p-3 pb-2 pt-5">
-              <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-[#5865F2]/25 px-2 py-1 text-[10px] font-semibold text-[#aab4ff]">DISCORD BOT · AKTİF</span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD GitHub profilini aç">GitHub profilini aç ↗</a></div>
+              <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-[#5865F2]/25 px-2 py-1 text-[10px] font-semibold text-[#aab4ff]" data-i18n="badgeActive">DISCORD BOT · AKTİF</span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="Oirat Moderation projesini GitHub'da gör" data-i18n="ghView">GitHub'da gör ↗</a></div>
               <h3 class="font-display text-xl font-bold text-white">Oirat Moderation</h3>
-              <p class="mt-2 text-sm font-light leading-6 text-muted">Oirat sunucusunun düzenini sağlayan bot: uyarı, susturma, otomatik kural ve detaylı log sistemi.</p>
+              <p class="mt-2 text-sm font-light leading-6 text-muted" data-i18n="p1Desc">Oirat sunucusunun düzenini sağlayan bot: uyarı, susturma, otomatik kural ve detaylı log sistemi.</p>
               <div class="mt-4 flex items-center justify-between gap-3">
                 <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
                   <span class="rounded bg-white/5 px-2 py-1">Discord.js</span>
                   <span class="rounded bg-white/5 px-2 py-1">Node.js</span>
                   <span class="rounded bg-white/5 px-2 py-1">MongoDB</span>
                 </div>
-                <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="moderation">Detaylar</button>
+                <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="moderation" data-i18n="detailsBtn">Detaylar</button>
               </div>
             </div>
           </article>
@@ -439,54 +469,53 @@
               <div class="rounded-xl border border-white/15 bg-[#101623]/85 p-4 shadow-xl backdrop-blur-xl">
                 <div class="flex items-center justify-between text-xs">
                   <p class="flex items-center gap-2"><span class="text-base">🛡️</span><b class="text-white">Oirat Guard</b></p>
-                  <span class="rounded-full bg-online/20 px-2 py-0.5 text-[9px] font-bold text-online">KORUMA AKTİF</span>
+                  <span class="rounded-full bg-online/20 px-2 py-0.5 text-[9px] font-bold text-online" data-i18n="protActive">KORUMA AKTİF</span>
                 </div>
                 <div class="mt-3 space-y-2 text-[11px]">
-                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Anti-raid</span><span class="text-online">✓ açık</span></p>
-                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Anti-spam</span><span class="text-online">✓ açık</span></p>
-                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Sahte hesap filtresi</span><span class="text-online">✓ açık</span></p>
+                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70" data-i18n="p2AntiRaid">Anti-raid</span><span class="text-online" data-i18n="p2On">✓ açık</span></p>
+                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70" data-i18n="p2AntiSpam">Anti-spam</span><span class="text-online" data-i18n="p2On">✓ açık</span></p>
+                  <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70" data-i18n="p2Fake">Sahte hesap filtresi</span><span class="text-online" data-i18n="p2On">✓ açık</span></p>
                 </div>
               </div>
             </div>
             <div class="relative p-3 pb-2 pt-5">
-              <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-rose-400/20 px-2 py-1 text-[10px] font-semibold text-rose-200">DISCORD BOT · AKTİF</span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD GitHub profilini aç">GitHub profilini aç ↗</a></div>
+              <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-rose-400/20 px-2 py-1 text-[10px] font-semibold text-rose-200" data-i18n="badgeActive">DISCORD BOT · AKTİF</span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="Oirat Guard projesini GitHub'da gör" data-i18n="ghView">GitHub'da gör ↗</a></div>
               <h3 class="font-display text-xl font-bold text-white">Oirat Guard</h3>
-              <p class="mt-2 text-sm font-light leading-6 text-muted">Sunucuyu raid, spam ve sahte hesaplara karşı koruyan güvenlik botu. Uyumaz, kahve de içmez.</p>
+              <p class="mt-2 text-sm font-light leading-6 text-muted" data-i18n="p2Desc">Sunucuyu raid, spam ve sahte hesaplara karşı koruyan güvenlik botu. Uyumaz, kahve de içmez.</p>
               <div class="mt-4 flex items-center justify-between gap-3">
                 <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
                   <span class="rounded bg-white/5 px-2 py-1">Discord.js</span>
                   <span class="rounded bg-white/5 px-2 py-1">TypeScript</span>
                   <span class="rounded bg-white/5 px-2 py-1">Redis</span>
                 </div>
-                <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="guard">Detaylar</button>
+                <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="guard" data-i18n="detailsBtn">Detaylar</button>
               </div>
             </div>
           </article>
 
         </div>
       </section>
-
-      <!-- ======== SETUP ======== -->
+    <!-- ======== SETUP ======== -->
       <section id="setup" class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <div data-reveal class="glass liquid rounded-[2rem] p-6 sm:p-10">
           <div class="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
             <div class="relative">
               <p class="mb-3 text-sm font-medium text-mint"># setup</p>
-              <h2 class="font-display text-4xl font-extrabold tracking-[-0.04em] text-white">Günün çoğu burada geçiyor.</h2>
-              <p class="mt-5 text-sm font-light leading-7 text-[#b5bac1]">Karanlık tema, gereğinden fazla açık sekme ve arka planda dönüp duran bir playlist.</p>
+              <h2 class="font-display text-4xl font-extrabold tracking-[-0.04em] text-white" data-i18n="setupTitle">Günün çoğu burada geçiyor.</h2>
+              <p class="mt-5 text-sm font-light leading-7 text-[#b5bac1]" data-i18n="setupDesc">Karanlık tema, gereğinden fazla açık sekme ve arka planda dönüp duran bir playlist.</p>
             </div>
             <div class="relative grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">⌨️</span><p class="mt-5 text-xs text-muted">Editör</p><b class="mt-1 block text-sm text-white">VS Code</b></div>
-              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">🎨</span><p class="mt-5 text-xs text-muted">Tasarım</p><b class="mt-1 block text-sm text-white">Tailwind CSS</b></div>
-              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">🎵</span><p class="mt-5 text-xs text-muted">Ses</p><b class="mt-1 block text-sm text-white">Tame Impala</b></div>
-              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">☕</span><p class="mt-5 text-xs text-muted">Yakıt</p><b class="mt-1 block text-sm text-white">Kahve</b></div>
+              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">⌨️</span><p class="mt-5 text-xs text-muted" data-i18n="setupEditor">Editör</p><b class="mt-1 block text-sm text-white">VS Code</b></div>
+              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">🎨</span><p class="mt-5 text-xs text-muted" data-i18n="setupDesign">Tasarım</p><b class="mt-1 block text-sm text-white">Tailwind CSS</b></div>
+              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">🎵</span><p class="mt-5 text-xs text-muted" data-i18n="setupSound">Ses</p><b class="mt-1 block text-sm text-white">Tame Impala</b></div>
+              <div class="rounded-2xl bg-black/20 p-4 transition hover:bg-black/30"><span class="text-2xl">☕</span><p class="mt-5 text-xs text-muted" data-i18n="setupFuel">Yakıt</p><b class="mt-1 block text-sm text-white" data-i18n="setupFuelValue">Kahve</b></div>
             </div>
           </div>
 
           <div class="mt-8 flex flex-wrap items-center gap-4 rounded-2xl bg-black/20 p-4">
             <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-pink-400 to-purple-600 text-xl">🎧</div>
             <div class="min-w-0 flex-1">
-              <p class="text-[10px] font-bold uppercase tracking-widest text-muted">Şu an çalıyor</p>
+              <p class="text-[10px] font-bold uppercase tracking-widest text-muted" data-i18n="npLabel">Şu an çalıyor</p>
               <p id="np-track" class="truncate text-sm font-semibold text-white">Tame Impala — The Less I Know The Better</p>
               <div class="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/10"><div id="np-bar" class="h-full w-0 rounded-full bg-gradient-to-r from-mint to-aqua"></div></div>
             </div>
@@ -499,9 +528,9 @@
       <section id="terminal" aria-label="İnteraktif terminal" class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <div data-reveal class="mb-10 flex items-center gap-3">
           <span class="text-2xl text-muted">#</span>
-          <h2 class="font-display text-3xl font-bold text-white">terminal</h2>
+          <h2 class="font-display text-3xl font-bold text-white" data-i18n="terminal">terminal</h2>
           <span class="h-px flex-1 bg-white/10"></span>
-          <span class="hidden text-xs text-muted sm:block">gerçekten çalışıyor, dene</span>
+          <span class="hidden text-xs text-muted sm:block" data-i18n="termHint">gerçekten çalışıyor, dene</span>
         </div>
 
         <div data-reveal class="glass liquid overflow-hidden rounded-[2rem]">
@@ -513,7 +542,7 @@
             <div id="term-out"></div>
             <div class="flex items-center gap-2">
               <span class="shrink-0 text-mint">mcd@dev:~$</span>
-              <input id="term-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal komutu" class="w-full bg-transparent text-ink caret-mint outline-none">
+              <input id="term-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal komutu" data-i18n-aria="termAria" class="w-full bg-transparent text-ink caret-mint outline-none">
             </div>
           </div>
         </div>
@@ -525,45 +554,49 @@
           <div class="absolute -left-16 -top-16 h-52 w-52 rounded-full bg-white/15 blur-3xl"></div>
           <div class="absolute -bottom-20 -right-10 h-60 w-60 rounded-full bg-mint/20 blur-3xl"></div>
           <div class="relative">
-            <span class="inline-block rotate-3 rounded-full bg-white/15 px-4 py-2 text-xs backdrop-blur-xl">MCD şu an çevrimiçi 🟢</span>
-            <h2 class="mx-auto mt-7 max-w-3xl font-display text-4xl font-extrabold tracking-[-0.05em] text-white sm:text-6xl">Bir fikrin mi var? DM kutum açık.</h2>
-            <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/80">Web projesi, ilginç bir iş birliği ya da sadece selam vermek için yazabilirsin.</p>
+            <span class="inline-flex rotate-3 items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs backdrop-blur-xl">
+              <span id="contact-presence-dot" class="h-2.5 w-2.5 rounded-full" data-presence="online"></span>
+              <span id="contact-presence-text">MCD şu an çevrimiçi 🟢</span>
+            </span>
+            <h2 class="mx-auto mt-7 max-w-3xl font-display text-4xl font-extrabold tracking-[-0.05em] text-white sm:text-6xl" data-i18n="contactTitle">Bir fikrin mi var? DM kutum açık.</h2>
+            <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/80" data-i18n="contactDesc">Web projesi, ilginç bir iş birliği ya da sadece selam vermek için yazabilirsin.</p>
             <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a href="mailto:mcdinspace@gmail.com" data-magnetic class="inline-flex rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#0b3d33] shadow-xl transition hover:bg-emerald-50">mcdinspace@gmail.com ↗</a>
-              <a href="https://discord.gg/oirat" target="_blank" rel="noopener noreferrer" data-magnetic class="inline-flex rounded-xl border border-white/30 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition hover:bg-white/20">Discord'a gel ↗</a>
+              <a href="https://discord.gg/oirat" target="_blank" rel="noopener noreferrer" data-magnetic class="inline-flex rounded-xl border border-white/30 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition hover:bg-white/20" data-i18n="discordLink">Discord'a gel ↗</a>
               <button type="button" data-copy="mcdinspace@gmail.com" data-magnetic class="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition hover:bg-white/20" aria-label="E-posta adresini kopyala">
                 <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M5 15V6a2 2 0 0 1 2-2h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                Kopyala
+                <span data-i18n="copyBtn">Kopyala</span>
               </button>
             </div>
           </div>
         </div>
       </section>
+
       <div id="project-modal" class="fixed inset-0 z-[95] hidden items-center justify-center px-4" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
         <div id="project-modal-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
         <div class="glass relative max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-[2rem] p-6 sm:p-8">
           <div class="flex items-start justify-between gap-4">
             <div><p id="project-modal-kicker" class="text-xs font-semibold uppercase tracking-widest text-mint"></p><h2 id="project-modal-title" class="mt-2 font-display text-3xl font-bold text-white"></h2></div>
-            <button id="project-modal-close" type="button" aria-label="Proje detayını kapat" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-xl text-white transition hover:bg-white/20">×</button>
+            <button id="project-modal-close" type="button" data-i18n-aria="modalCloseAria" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-xl text-white transition hover:bg-white/20">×</button>
           </div>
           <p id="project-modal-description" class="mt-5 leading-7 text-ink"></p>
           <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <div class="rounded-xl bg-black/20 p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-muted">Problem</p><p id="project-modal-problem" class="mt-2 text-sm leading-6 text-white/80"></p></div>
-            <div class="rounded-xl bg-black/20 p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-muted">Çözüm</p><p id="project-modal-solution" class="mt-2 text-sm leading-6 text-white/80"></p></div>
+            <div class="rounded-xl bg-black/20 p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-muted" data-i18n="modalProblem">Problem</p><p id="project-modal-problem" class="mt-2 text-sm leading-6 text-white/80"></p></div>
+            <div class="rounded-xl bg-black/20 p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-muted" data-i18n="modalSolution">Çözüm</p><p id="project-modal-solution" class="mt-2 text-sm leading-6 text-white/80"></p></div>
           </div>
           <div class="mt-4 flex flex-wrap gap-2" id="project-modal-tags"></div>
-          <div class="mt-6 flex items-center justify-between gap-4 border-t border-white/10 pt-5 text-sm"><span id="project-modal-status" class="text-online"></span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="font-semibold text-mint hover:underline">GitHub profilini aç ↗</a></div>
+          <div class="mt-6 flex items-center justify-between gap-4 border-t border-white/10 pt-5 text-sm"><span id="project-modal-status" class="text-online"></span><a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="font-semibold text-mint hover:underline" data-i18n="modalGitHub">GitHub profilini aç ↗</a></div>
         </div>
       </div>
     </main>
 
-    <button id="to-top" type="button" aria-label="Sayfanın başına dön" class="glass grid h-12 w-12 place-items-center rounded-2xl text-lg text-white transition hover:bg-white/15">↑</button>
+    <button id="to-top" type="button" data-i18n-aria="toTopAria" class="glass grid h-12 w-12 place-items-center rounded-2xl text-lg text-white transition hover:bg-white/15">↑</button>
 
     <footer class="relative mx-auto flex max-w-6xl flex-col justify-between gap-5 px-6 py-10 text-xs text-muted sm:flex-row">
-      <p>© 2026 MCD. İnternette sevgiyle kodlandı. <span class="opacity-60">(psst: ↑↑↓↓←→←→BA · Ctrl+K)</span></p>
+      <p>© 2026 MCD. <span data-i18n="footerCopy">İnternette sevgiyle kodlandı.</span> <span class="opacity-60" data-i18n="footerHint">(psst: ↑↑↓↓←→←→BA · Ctrl+K)</span></p>
       <div class="flex gap-5">
         <a href="https://github.com/mcd4hell" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">GitHub</a>
-        <a href="https://discord.gg/oirat" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">Discord · Oirat</a>
+        <a href="https://discord.com/" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">Discord · Oirat</a>
       </div>
     </footer>
   </body>

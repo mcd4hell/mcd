@@ -13,160 +13,494 @@
 
   root.classList.add("js");
 
-  const PROJECTS = {
-    portfolio: {
-      category: "web",
-      title: "MCD.dev",
-      description: "Bu sitenin kendisi: tek sayfalık portföy, Discord esintili arayüz, canlı etkileşimler ve GitHub odaklı içerik güncellemeleri.",
-      tags: ["HTML", "Tailwind CSS", "JavaScript"],
-      link: "https://github.com/mcd4hell/mcd",
-      kicker: "Web · public repo",
-      problem: "Portföyü süslü laflarla değil, hızlı açılan ve net okunan içerikle ayakta tutmak.",
-      solution: "Tek sayfada güçlü görsel dil, hafif etkileşimler ve günlük GitHub senkronuyla yaşayan bir vitrin kurmak.",
-      status: "● Public repo · 23 Eyl 2026 güncellendi",
+  /* ================= ÇEVİRİ SÖZLÜĞÜ (TR / EN) ================= */
+  const i18n = {
+    tr: {
+      metaTitle: "MCD — full-stack developer",
+      metaDesc: "MCD'nin kod, tasarım ve internet köşesi. TypeScript, React ve Node.js ile hızlı, eğlenceli web deneyimleri.",
+      ogLocale: "tr_TR",
+      skip: "İçeriğe atla",
+      navAria: "Ana menü",
+      langBtnAria: "Dili İngilizceye çevir",
+      menuAria: "Menüyü aç/kapat",
+      paletteAria: "Komut paleti",
+      skill: "ara / komut",
+      message: "Mesaj at",
+      about: "hakkımda",
+      projects: "projeler",
+      setup: "setup",
+      terminal: "terminal",
+      contact: "iletişim",
+      heroHi: "selam, ben",
+      heroDesc: "İnternette bir şeyler tasarlayan, kodlayan ve arada sırada bozan full-stack developer. Temiz kod severim ama kahvem kadar ciddi değilim.",
+      ctaWork: "Yaptıklarıma bak",
+      ctaGitHub: "GitHub'a ışınlan ↗",
+      statExp: "yıl deneyim",
+      statProj: "tamamlanan proje",
+      statCoffee: "içilen kahve",
+      heroStack: "TypeScript, React, Node.js ve bolca Ctrl+Z",
+      city: "İstanbul",
+      cardAddFriend: "Arkadaş ekle",
+      cardAbout: "Hakkımda",
+      cardAboutText: "Kafamdaki pikselleri ekrana koyuyorum. Bazen backend de yazıyorum. ☕",
+      cardMember: "Üyelik tarihi",
+      cardMemberText: "İnternetin eski ve güzel zamanları",
+      badgeDev: "🎮 developer",
+      badgeFounder: "⚔️ oirat kurucusu",
+      badgeMusic: "🎧 tame impala enjoyer",
+      badgeOwl: "🌙 night owl",
+      buildBadgeTitle: "Build başarılı",
+      buildBadgeText: "hiç şüphemiz yoktu",
+      oiratBadgeText: "sunucu kurucusu",
+      scrollHint: "kaydır",
+      aboutHeading: "hakkımda",
+      chanGenel: "# genel",
+      chanKahve: "# kahve-molası",
+      chanKod: "# kod-yardım",
+      chanRadio: "🔊 tame impala radio",
+      threadName: "MCD hakkında birkaç şey",
+      chatTime1: "Bugün 14:32",
+      chatTime2: "Bugün 14:33",
+      chatTime3: "Bugün 14:35",
+      chatMsg1: "Benim için iyi bir web sitesi sadece güzel görünen bir şey değil; hızlı, kolay ve kullanırken küçük sürprizler bırakan bir yer.",
+      chatMsg2: "Uzmanlık alanları bulundu:",
+      chatMsg3: "Bu arada Oirat'ın botlarını da ben yazıyorum — Moderation düzeni sağlıyor, Guard kapıda bekliyor. Sıradaki bot: belli olmaz 👀",
+      chipFront: "Frontend büyüsü",
+      chipBack: "Backend işleri",
+      chipUI: "UI detayları",
+      typingSuffix: "yazıyor...",
+      onlineMembers: "Çevrimiçi — 3",
+      memberMcdStatus: "VS Code",
+      memberTsStatus: "hata buluyor",
+      memberCoffeeStatus: "az kaldı",
+      heatTitle: "Commit ısı haritası",
+      heatSub: "son 52 hafta, gayet bilimsel",
+      heatUnit: "commit",
+      heatLow: "az",
+      heatHigh: "çok",
+      heatRest: "dinlenme günü",
+      servicesHeading: "ne yapıyorum",
+      svc1Title: "Web deneyimleri",
+      svc1Text: "Hızlı, responsive ve karakteri olan landing page'ler ve portföyler.",
+      svc2Title: "Bot & otomasyon",
+      svc2Text: "Discord toplulukları için moderasyon, güvenlik ve iş akışı araçları.",
+      svc3Title: "Ürünleştirme",
+      svc3Text: "Fikri netleştirip çalışan, bakımı kolay ve ölçülebilir bir ürüne dönüştürme.",
+      projectsHeading: "projeler",
+      filterAll: "Tümü",
+      filterBot: "Discord bot",
+      filterWeb: "Web",
+      filterTool: "Araç",
+      countSuffix: "proje gösteriliyor",
+      badgeActive: "DISCORD BOT · AKTİF",
+      ghView: "GitHub'da gör ↗",
+      detailsBtn: "Detaylar",
+      p1LogTitle: "Moderasyon kaydı",
+      p1LogText: "@troll42 susturuldu — sebep: spam · 10 dk",
+      p1LogOk: "✓ log kanalına iletildi",
+      p1Desc: "Oirat sunucusunun düzenini sağlayan bot: uyarı, susturma, otomatik kural ve detaylı log sistemi.",
+      protActive: "KORUMA AKTİF",
+      p2AntiRaid: "Anti-raid",
+      p2AntiSpam: "Anti-spam",
+      p2Fake: "Sahte hesap filtresi",
+      p2On: "✓ açık",
+      p2Desc: "Sunucuyu raid, spam ve sahte hesaplara karşı koruyan güvenlik botu. Uyumaz, kahve de içmez.",
+      setupTitle: "Günün çoğu burada geçiyor.",
+      setupDesc: "Karanlık tema, gereğinden fazla açık sekme ve arka planda dönüp duran bir playlist.",
+      setupEditor: "Editör",
+      setupDesign: "Tasarım",
+      setupSound: "Ses",
+      setupFuel: "Yakıt",
+      setupFuelValue: "Kahve",
+      npLabel: "Şu an çalıyor",
+      termHint: "gerçekten çalışıyor, dene",
+      termAria: "Terminal komutu",
+      contactTitle: "Bir fikrin mi var? DM kutum açık.",
+      contactDesc: "Web projesi, ilginç bir iş birliği ya da sadece selam vermek için yazabilirsin.",
+      discordLink: "Discord'a gel ↗",
+      copyBtn: "Kopyala",
+      modalProblem: "Problem",
+      modalSolution: "Çözüm",
+      modalGitHub: "GitHub profilini aç ↗",
+      modalCloseAria: "Proje detayını kapat",
+      toTopAria: "Sayfanın başına dön",
+      footerCopy: "İnternette sevgiyle kodlandı.",
+      footerHint: "(psst: ↑↑↓↓←→←→BA · Ctrl+K)",
+      tabAway: "gitme 🥺 — MCD",
+      copyToast: "E-posta panoya kopyalandı ✨",
+      refreshToast: "Discord durumu güncellendi ✨",
+      partyOn: "Parti modu açıldı 🎉",
+      partyOff: "Parti bitti, işe dönüyoruz 🧑‍💻",
+      themeAria: "Tema:",
+      themeToast: "Tema: {theme}",
+      themeNight: "gece",
+      themeContrast: "yüksek kontrast",
+      themeSoft: "yumuşak",
+      palettePh: "Komut yaz ya da ara...",
+      paletteEmpty: "Hiçbir şey bulunamadı 🤷",
+      modKicker: "Discord bot · aktif",
+      modTitle: "Oirat Moderation",
+      modDesc: "Oirat sunucusunun günlük düzenini görünmez bir yardımcı gibi ayakta tutan moderasyon sistemi.",
+      modProblem: "Yoğun toplulukta kuralları hızlı ve tutarlı uygulamak.",
+      modSolution: "Uyarı, susturma, otomatik kural ve detaylı log akışlarını tek bir botta birleştirmek.",
+      modStatus: "● Aktif geliştirme",
+      guardTitle: "Oirat Guard",
+      guardDesc: "Raid, spam ve sahte hesaplara karşı sunucunun kapısında bekleyen güvenlik botu.",
+      guardProblem: "Kötü niyetli girişleri moderatörlerden önce tespit etmek.",
+      guardSolution: "Anti-raid, anti-spam ve sahte hesap filtrelerini Redis destekli hızlı kontrollerle çalıştırmak.",
+      guardStatus: "● Koruma aktif",
+      presOnline: "çevrimiçi",
+      presIdle: "boşta",
+      presDnd: "rahatsız etme modunda",
+      presOffline: "çevrimdışı",
+      contactOnline: "MCD şu an çevrimiçi",
+      contactIdle: "MCD biraz boşta",
+      contactDnd: "MCD meşgul, kapıyı vurma",
+      contactOffline: "MCD şu an çevrimdışı",
+      statuses: [
+        "online, muhtemelen kod yazıyor",
+        "bug ile pazarlık yapıyor",
+        "kahve molasında (kısa sürer)",
+        "commit mesajı düşünüyor",
+        "dark mode'da felsefe yapıyor",
+        "tab'ları kapatmayı reddediyor",
+        "oirat'ta ortalığı sakinleştiriyor",
+        "guard bot'a yeni numara öğretiyor",
+      ],
+      hintSection: "bölüm",
+      hintAction: "aksiyon",
+      hintLink: "link",
+      hintTheme: "tema",
+      hintLang: "dil",
+      hintProject: "proje",
+      hintFun: "eğlence",
+      plAbout: "# hakkımda bölümüne git",
+      plProjects: "# projeler bölümüne git",
+      plSetup: "# setup bölümüne git",
+      plTerminal: "# terminal bölümüne git",
+      plContact: "# iletişim bölümüne git",
+      plServices: "Hizmetler bölümüne git",
+      plTop: "Sayfanın başına dön",
+      plCopyEmail: "E-postayı kopyala",
+      plGitHub: "GitHub profilini aç (mcd4hell)",
+      plDiscord: "Discord'a ışınlan (Oirat)",
+      plRefresh: "Discord durumunu yenile",
+      plNight: "Gece temasına geç",
+      plContrast: "Yüksek kontrast temasına geç",
+      plSoft: "Yumuşak temaya geç",
+      plTR: "Türkçeye geç",
+      plEN: "Switch to English",
+      plMod: "Oirat Moderation detaylarını aç",
+      plGuard: "Oirat Guard detaylarını aç",
+      plConfetti: "Konfeti patlat",
+      plParty: "Parti modunu aç/kapat",
+      termWelcome: "MCD terminaline hoş geldin. 'help' yazarak başla.",
+      termHelpCmd: "komutlar: whoami · projects · filter <tümü|bot> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear",
+      termWhoami: "MCD (mcd4hell) — full-stack developer, Oirat kurucusu. TypeScript sever, bug'larla pazarlık eder.",
+      termProjects1: "• Oirat Moderation — Oirat sunucusunun düzen botu (uyarı, susturma, log)",
+      termProjects2: "• Oirat Guard      — anti-raid & anti-spam güvenlik botu",
+      termRest: "gerisi gizli-planlar/ klasöründe 🤫",
+      termFilterUsage: "kullanım: filter tümü | bot | web | araç",
+      termFilterSet: "proje filtresi: {v}",
+      termStack: "TypeScript · React · Next.js · Node.js · Tailwind · PostgreSQL · Docker",
+      termOirat1: "⚔️ Oirat — MCD'nin Discord sunucusu.",
+      termOirat2: "Moderation bot düzeni sağlar, Guard bot kapıda bekler. İkisi de burada yazıldı.",
+      termGitHub: "github.com/mcd4hell açılıyor...",
+      termSetup: "VS Code + Tailwind + Tame Impala + kahve. Denenmiş, onaylanmış.",
+      termServices: "web deneyimleri · bot & otomasyon · ürünleştirme",
+      termThemeUsage: "kullanım: theme gece | kontrast | yumuşak",
+      termThemeSet: "tema: {v}",
+      termAbout: "MCD — full-stack developer, Oirat kurucusu. Temiz kod, küçük sürprizler.",
+      termContact: "mcdinspace@gmail.com — DM kutusu her zaman açık.",
+      termCoffee: "☕ demleniyor... tamamdır. Verimlilik +%12.",
+      termPartyOn: "🎉 parti modu: AÇIK",
+      termPartyOff: "parti modu: kapalı. işe dönüyoruz.",
+      termLs: "projeler/  setup/  gizli-planlar/  bitmemis-yan-projeler/  (247 öğe)",
+      termSudo: "Güzel deneme. Burada root benim. 😎",
+      termExit: "Buradan çıkış yok, kaydırmaya devam. 🙃",
+      termUnknown: "komut bulunamadı: {cmd} — 'help' dene",
     },
-    profile: {
-      category: "profile",
-      title: "GitHub Profile README",
-      description: "GitHub profilini boş bırakmayan README: stack, istatistik kartları, commit yılanı ve site bağlantıları tek vitrinde.",
-      tags: ["Markdown", "SVG", "GitHub"],
-      link: "https://github.com/mcd4hell/mcd4hell",
-      kicker: "Profil · public repo",
-      problem: "GitHub profili boşsa ilk izlenim de boş kalıyor.",
-      solution: "README içinde canlı istatistikler, sosyal linkler ve görsel küçük numaralarla profili tek bakışta anlatmak.",
-      status: "● Public repo · 20 Tem 2026 güncellendi",
+    en: {
+      metaTitle: "MCD — full-stack developer",
+      metaDesc: "MCD's corner of code, design and the internet. Fast, playful web experiences with TypeScript, React and Node.js.",
+      ogLocale: "en_US",
+      skip: "Skip to content",
+      navAria: "Main menu",
+      langBtnAria: "Switch language to Turkish",
+      menuAria: "Open/close menu",
+      paletteAria: "Command palette",
+      skill: "search / commands",
+      message: "Send a message",
+      about: "about",
+      projects: "projects",
+      setup: "setup",
+      terminal: "terminal",
+      contact: "contact",
+      heroHi: "hey, I'm",
+      heroDesc: "A full-stack developer who designs, codes and occasionally breaks things on the internet. I love clean code, but I'm not as serious as my coffee.",
+      ctaWork: "See my work",
+      ctaGitHub: "Beam me to GitHub ↗",
+      statExp: "years of experience",
+      statProj: "projects completed",
+      statCoffee: "coffees drank",
+      heroStack: "TypeScript, React, Node.js and plenty of Ctrl+Z",
+      city: "Istanbul",
+      cardAddFriend: "Add friend",
+      cardAbout: "About me",
+      cardAboutText: "Putting the pixels in my head on screen. I write backend sometimes too. ☕",
+      cardMember: "Member since",
+      cardMemberText: "The good old days of the internet",
+      badgeDev: "🎮 developer",
+      badgeFounder: "⚔️ oirat founder",
+      badgeMusic: "🎧 tame impala enjoyer",
+      badgeOwl: "🌙 night owl",
+      buildBadgeTitle: "Build successful",
+      buildBadgeText: "we never doubted it",
+      oiratBadgeText: "server founder",
+      scrollHint: "scroll",
+      aboutHeading: "about",
+      chanGenel: "# general",
+      chanKahve: "# coffee-break",
+      chanKod: "# code-help",
+      chanRadio: "🔊 tame impala radio",
+      threadName: "a few things about MCD",
+      chatTime1: "Today 14:32",
+      chatTime2: "Today 14:33",
+      chatTime3: "Today 14:35",
+      chatMsg1: "For me, a good website isn't just something that looks nice; it's a place that's fast, easy and leaves little surprises while you use it.",
+      chatMsg2: "Specialties found:",
+      chatMsg3: "By the way, I also write Oirat's bots — Moderation keeps order, Guard stands at the gate. Next bot: who knows 👀",
+      chipFront: "Frontend magic",
+      chipBack: "Backend work",
+      chipUI: "UI details",
+      typingSuffix: "is typing...",
+      onlineMembers: "Online — 3",
+      memberMcdStatus: "VS Code",
+      memberTsStatus: "finding bugs",
+      memberCoffeeStatus: "running low",
+      heatTitle: "Commit heatmap",
+      heatSub: "last 52 weeks, very scientific",
+      heatUnit: "commits",
+      heatLow: "less",
+      heatHigh: "more",
+      heatRest: "rest day",
+      servicesHeading: "what I do",
+      svc1Title: "Web experiences",
+      svc1Text: "Fast, responsive landing pages and portfolios with a character of their own.",
+      svc2Title: "Bots & automation",
+      svc2Text: "Moderation, security and workflow tools for Discord communities.",
+      svc3Title: "Productization",
+      svc3Text: "Turning an idea into a working, maintainable and measurable product.",
+      projectsHeading: "projects",
+      filterAll: "All",
+      filterBot: "Discord bot",
+      filterWeb: "Web",
+      filterTool: "Tools",
+      countSuffix: "projects shown",
+      badgeActive: "DISCORD BOT · ACTIVE",
+      ghView: "View on GitHub ↗",
+      detailsBtn: "Details",
+      p1LogTitle: "Moderation log",
+      p1LogText: "@troll42 muted — reason: spam · 10 min",
+      p1LogOk: "✓ forwarded to log channel",
+      p1Desc: "The bot keeping Oirat's server in order: warnings, mutes, auto rules and a detailed logging system.",
+      protActive: "PROTECTION ACTIVE",
+      p2AntiRaid: "Anti-raid",
+      p2AntiSpam: "Anti-spam",
+      p2Fake: "Fake account filter",
+      p2On: "✓ on",
+      p2Desc: "A security bot guarding the server against raids, spam and fake accounts. Never sleeps, doesn't drink coffee either.",
+      setupTitle: "Most of the day happens here.",
+      setupDesc: "A dark theme, way too many open tabs and a playlist going in the background.",
+      setupEditor: "Editor",
+      setupDesign: "Design",
+      setupSound: "Sound",
+      setupFuel: "Fuel",
+      setupFuelValue: "Coffee",
+      npLabel: "Now playing",
+      termHint: "it actually works, try it",
+      termAria: "Terminal command",
+      contactTitle: "Got an idea? My DMs are open.",
+      contactDesc: "Write to me for a web project, an interesting collaboration, or just to say hi.",
+      discordLink: "Join on Discord ↗",
+      copyBtn: "Copy",
+      modalProblem: "Problem",
+      modalSolution: "Solution",
+      modalGitHub: "Open GitHub profile ↗",
+      modalCloseAria: "Close project details",
+      toTopAria: "Back to top",
+      footerCopy: "Coded with love on the internet.",
+      footerHint: "(psst: ↑↑↓↓←→←→BA · Ctrl+K)",
+      tabAway: "don't go 🥺 — MCD",
+      copyToast: "Email copied to clipboard ✨",
+      refreshToast: "Discord status updated ✨",
+      partyOn: "Party mode on 🎉",
+      partyOff: "Party over, back to work 🧑‍💻",
+      themeAria: "Theme:",
+      themeToast: "Theme: {theme}",
+      themeNight: "night",
+      themeContrast: "high contrast",
+      themeSoft: "soft",
+      palettePh: "Type a command or search...",
+      paletteEmpty: "Nothing found 🤷",
+      modKicker: "Discord bot · active",
+      modTitle: "Oirat Moderation",
+      modDesc: "The moderation system keeping Oirat's server running like an invisible helper.",
+      modProblem: "Enforcing rules quickly and consistently in a busy community.",
+      modSolution: "Combining warnings, mutes, auto rules and detailed log flows into a single bot.",
+      modStatus: "● Active development",
+      guardTitle: "Oirat Guard",
+      guardDesc: "The security bot standing at the server's gate against raids, spam and fake accounts.",
+      guardProblem: "Detecting malicious entries before moderators do.",
+      guardSolution: "Running anti-raid, anti-spam and fake account filters with fast Redis-backed checks.",
+      guardStatus: "● Protection active",
+      presOnline: "online",
+      presIdle: "idle",
+      presDnd: "do-not-disturb",
+      presOffline: "offline",
+      contactOnline: "MCD is online right now",
+      contactIdle: "MCD is idle for a bit",
+      contactDnd: "MCD is busy, don't knock",
+      contactOffline: "MCD is offline right now",
+      statuses: [
+        "online, probably writing code",
+        "negotiating with a bug",
+        "on a coffee break (won't last)",
+        "thinking of a commit message",
+        "philosophizing in dark mode",
+        "refusing to close tabs",
+        "calming things down on Oirat",
+        "teaching the guard bot new tricks",
+      ],
+      hintSection: "section",
+      hintAction: "action",
+      hintLink: "link",
+      hintTheme: "theme",
+      hintLang: "language",
+      hintProject: "project",
+      hintFun: "fun",
+      plAbout: "# go to about section",
+      plProjects: "# go to projects section",
+      plSetup: "# go to setup section",
+      plTerminal: "# go to terminal section",
+      plContact: "# go to contact section",
+      plServices: "Go to services section",
+      plTop: "Back to top",
+      plCopyEmail: "Copy email",
+      plGitHub: "Open GitHub profile (mcd4hell)",
+      plDiscord: "Beam to Discord (Oirat)",
+      plRefresh: "Refresh Discord status",
+      plNight: "Switch to night theme",
+      plContrast: "Switch to high contrast theme",
+      plSoft: "Switch to soft theme",
+      plTR: "Switch to Turkish",
+      plEN: "Switch to English",
+      plMod: "Open Oirat Moderation details",
+      plGuard: "Open Oirat Guard details",
+      plConfetti: "Fire confetti",
+      plParty: "Toggle party mode",
+      termWelcome: "Welcome to the MCD terminal. Type 'help' to start.",
+      termHelpCmd: "commands: whoami · projects · filter <all|bot> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <message> · clear",
+      termWhoami: "MCD (mcd4hell) — full-stack developer, founder of Oirat. Loves TypeScript, negotiates with bugs.",
+      termProjects1: "• Oirat Moderation — Oirat's server discipline bot (warn, mute, log)",
+      termProjects2: "• Oirat Guard      — anti-raid & anti-spam security bot",
+      termRest: "the rest is in the secret-plans/ folder 🤫",
+      termFilterUsage: "usage: filter all | bot | web | tool",
+      termFilterSet: "project filter: {v}",
+      termStack: "TypeScript · React · Next.js · Node.js · Tailwind · PostgreSQL · Docker",
+      termOirat1: "⚔️ Oirat — MCD's Discord server.",
+      termOirat2: "The Moderation bot keeps order, the Guard bot stands at the gate. Both were written here.",
+      termGitHub: "opening github.com/mcd4hell...",
+      termSetup: "VS Code + Tailwind + Tame Impala + coffee. Tried and approved.",
+      termServices: "web experiences · bots & automation · productization",
+      termThemeUsage: "usage: theme night | contrast | soft",
+      termThemeSet: "theme: {v}",
+      termAbout: "MCD — full-stack developer, founder of Oirat. Clean code, little surprises.",
+      termContact: "mcdinspace@gmail.com — DMs always open.",
+      termCoffee: "☕ brewing... done. Productivity +12%.",
+      termPartyOn: "🎉 party mode: ON",
+      termPartyOff: "party mode: off. back to work.",
+      termLs: "projects/  setup/  secret-plans/  unfinished-side-projects/  (247 items)",
+      termSudo: "Nice try. I'm root here. 😎",
+      termExit: "No exit here, keep scrolling. 🙃",
+      termUnknown: "command not found: {cmd} — try 'help'",
     },
   };
 
-  const syncProjectContent = () => {
-    const filterButtons = $$(".project-filter");
-    if (filterButtons[1]) {
-      filterButtons[1].textContent = "Web";
-      filterButtons[1].dataset.filter = "web";
-    }
-    if (filterButtons[2]) {
-      filterButtons[2].textContent = "Profil";
-      filterButtons[2].dataset.filter = "profile";
-    }
-    filterButtons[3]?.remove();
-
-    const cards = $$('[data-project-category]');
-    const [portfolioCard, profileCard] = cards;
-
-    if (portfolioCard) {
-      portfolioCard.dataset.projectCategory = PROJECTS.portfolio.category;
-      portfolioCard.innerHTML = `
-        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-mint to-[#0f766e] p-5">
-          <div class="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/20 blur-2xl"></div>
-          <div class="rounded-xl border border-white/15 bg-[#101623]/85 p-4 shadow-xl backdrop-blur-xl">
-            <div class="flex items-center gap-2 text-xs">
-              <span class="grid h-8 w-8 place-items-center rounded-full bg-mint text-sm font-bold text-[#04180f]">&lt;/&gt;</span>
-              <p><b class="text-white">MCD.dev</b> <span class="ml-1 rounded bg-mint px-1 text-[9px] font-bold text-[#04180f]">WEB</span></p>
-            </div>
-            <div class="mt-3 rounded-lg border-l-4 border-aqua bg-black/30 p-3 text-[11px]">
-              <p class="font-semibold text-white">Portföy commit'i</p>
-              <p class="mt-1 text-white/60">tek sayfa · canlı etkileşim · repo senkronu</p>
-            </div>
-            <p class="mt-3 text-[10px] text-white/40">✓ açık kaynak · son güncelleme 23 Eyl 2026</p>
-          </div>
-        </div>
-        <div class="relative p-3 pb-2 pt-5">
-          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-mint/20 px-2 py-1 text-[10px] font-semibold text-mint">PUBLIC REPO · 23 EYL 2026</span><a href="${PROJECTS.portfolio.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="MCD.dev reposunu aç">Repo'yu aç ↗</a></div>
-          <h3 class="font-display text-xl font-bold text-white">${PROJECTS.portfolio.title}</h3>
-          <p class="mt-2 text-sm font-light leading-6 text-muted">${PROJECTS.portfolio.description}</p>
-          <div class="mt-4 flex items-center justify-between gap-3">
-            <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
-              ${PROJECTS.portfolio.tags.map((tag) => `<span class="rounded bg-white/5 px-2 py-1">${tag}</span>`).join("")}
-            </div>
-            <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="portfolio">Detaylar</button>
-          </div>
-        </div>
-      `;
-    }
-
-    if (profileCard) {
-      profileCard.dataset.projectCategory = PROJECTS.profile.category;
-      profileCard.innerHTML = `
-        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-grape to-[#312e81] p-5">
-          <div class="absolute -left-10 -bottom-10 h-36 w-36 rounded-full bg-white/15 blur-2xl"></div>
-          <div class="rounded-xl border border-white/15 bg-[#101623]/85 p-4 shadow-xl backdrop-blur-xl">
-            <div class="flex items-center justify-between text-xs">
-              <p class="flex items-center gap-2"><span class="text-base">#</span><b class="text-white">mcd4hell</b></p>
-              <span class="rounded-full bg-grape/25 px-2 py-0.5 text-[9px] font-bold text-[#d9d1ff]">README</span>
-            </div>
-            <div class="mt-3 space-y-2 text-[11px]">
-              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Stack</span><span class="text-mint">✓ görünür</span></p>
-              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">İstatistikler</span><span class="text-mint">✓ canlı</span></p>
-              <p class="flex items-center justify-between rounded-lg bg-black/30 px-3 py-2"><span class="text-white/70">Site bağlantısı</span><span class="text-mint">✓ açık</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="relative p-3 pb-2 pt-5">
-          <div class="mb-3 flex items-center justify-between gap-3"><span class="rounded-md bg-grape/20 px-2 py-1 text-[10px] font-semibold text-[#d9d1ff]">PROFİL REPO · 20 TEM 2026</span><a href="${PROJECTS.profile.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-mint underline-offset-4 transition hover:text-white hover:underline" aria-label="GitHub Profile README reposunu aç">Repo'yu aç ↗</a></div>
-          <h3 class="font-display text-xl font-bold text-white">${PROJECTS.profile.title}</h3>
-          <p class="mt-2 text-sm font-light leading-6 text-muted">${PROJECTS.profile.description}</p>
-          <div class="mt-4 flex items-center justify-between gap-3">
-            <div class="flex flex-wrap gap-1.5 text-[10px] text-muted">
-              ${PROJECTS.profile.tags.map((tag) => `<span class="rounded bg-white/5 px-2 py-1">${tag}</span>`).join("")}
-            </div>
-            <button type="button" class="project-details shrink-0 rounded-lg border border-mint/30 px-3 py-2 text-[10px] font-semibold text-mint transition hover:bg-mint hover:text-[#04180f]" data-project="profile">Detaylar</button>
-          </div>
-        </div>
-      `;
-    }
+  const lang = () => (root.lang === "en" ? "en" : "tr");
+  const t = (key) => {
+    const copy = i18n[lang()];
+    return key in copy ? copy[key] : i18n.tr[key];
   };
 
-  syncProjectContent();
-
-  /* ---------- Türkçe / English ---------- */
+  /* ------------------------------------------------------------
+     Dil sistemi
+  ------------------------------------------------------------ */
   const languageButton = $("#language-button");
   const mobileLanguageButton = $("#mobile-language-button");
-  const languageMeta = {
-    tr: { title: "MCD — full-stack developer", description: "MCD'nin kod, tasarım ve internet köşesi. TypeScript, React ve Node.js ile hızlı, eğlenceli web deneyimleri.", ogLocale: "tr_TR" },
-    en: { title: "MCD — full-stack developer", description: "MCD's corner of code, design and the internet. Fast, playful web experiences with TypeScript, React and Node.js.", ogLocale: "en_US" },
-  };
-  const translations = {
-    tr: { heroStatus: "online, muhtemelen kod yazıyor", about: "hakkımda", projects: "projeler", setup: "setup", terminal: "terminal", contact: "iletişim", services: "ne yapıyorum", message: "Mesaj at", projectCount: "proje gösteriliyor" },
-    en: { heroStatus: "online, probably writing code", about: "about", projects: "projects", setup: "setup", terminal: "terminal", contact: "contact", services: "what I do", message: "Send a message", projectCount: "projects shown" },
-  };
+  const SECTION_KEYS = new Set(["about", "projects", "setup", "terminal", "contact"]);
+  let baseTitle = doc.title;
+  let clockFmt = new Intl.DateTimeFormat(lang() === "tr" ? "tr-TR" : "en-US", { hour: "2-digit", minute: "2-digit" });
+
   const setLanguage = (language) => {
-    const lang = language === "en" ? "en" : "tr";
-    const copy = translations[lang];
-    root.lang = lang;
-    localStorage.setItem("mcd-language", lang);
-    doc.title = languageMeta[lang].title;
-    $("meta[name='description']")?.setAttribute("content", languageMeta[lang].description);
-    $("meta[property='og:description']")?.setAttribute("content", languageMeta[lang].description);
-    $("meta[property='og:locale']")?.setAttribute("content", languageMeta[lang].ogLocale);
-    $("#hero-status") && ($("#hero-status").textContent = copy.heroStatus);
-    const labels = { about: copy.about, projects: copy.projects, setup: copy.setup, terminal: copy.terminal, contact: copy.contact };
-    $$(`[href^="#"]`).forEach((link) => { const key = link.getAttribute("href")?.slice(1); if (labels[key] && link.classList.contains("nav-link")) link.textContent = `# ${labels[key]}`; });
-    const projectTotal = doc.querySelectorAll("[data-project-category]").length || 2;
-    $("#project-count") && ($("#project-count").textContent = `${projectTotal} ${copy.projectCount}`);
-    [languageButton, mobileLanguageButton].forEach((button) => { if (button) { button.dataset.language = lang; button.setAttribute("aria-label", lang === "tr" ? "Dili İngilizceye çevir" : "Switch language to Turkish"); } });
-    $$(".language-option").forEach((option, i) => option.classList.toggle("is-active", (lang === "tr" ? i === 0 : i === 1)));
+    const next = language === "en" ? "en" : "tr";
+    root.lang = next;
+    try { localStorage.setItem("mcd-language", next); } catch {}
+
+    doc.title = t("metaTitle");
+    baseTitle = doc.title;
+    $("meta[name='description']")?.setAttribute("content", t("metaDesc"));
+    $("meta[property='og:description']")?.setAttribute("content", t("metaDesc"));
+    $("meta[property='og:locale']")?.setAttribute("content", t("ogLocale"));
+    $("meta[property='og:title']")?.setAttribute("content", t("metaTitle"));
+    $("meta[name='twitter:title']")?.setAttribute("content", t("metaTitle"));
+    $("meta[name='twitter:description']")?.setAttribute("content", t("metaDesc"));
+
+    $$("[data-i18n]").forEach((el) => {
+      const text = t(el.dataset.i18n);
+      if (SECTION_KEYS.has(el.dataset.i18n) && (el.classList.contains("nav-link") || el.classList.contains("mobile-link"))) el.textContent = `# ${text}`;
+      else el.textContent = text;
+    });
+    $$("[data-i18n-placeholder]").forEach((el) => { if (el.dataset.i18nPlaceholder) el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder)); });
+    $$("[data-i18n-aria]").forEach((el) => { if (el.dataset.i18nAria) el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+
+    $$(".language-option").forEach((option, i) => option.classList.toggle("is-active", next === "tr" ? i === 0 : i === 1));
+
+    clockFmt = new Intl.DateTimeFormat(next === "tr" ? "tr-TR" : "en-US", { hour: "2-digit", minute: "2-digit" });
+    $("#local-clock") && ( $("#local-clock").textContent = clockFmt.format(new Date()) );
+
+    if (projectCountEl) projectCountEl.textContent = `${shownCount} ${t("countSuffix")}`;
+    startStatusTyping();
+    syncPresence();
+    if (palette && !palette.classList.contains("hidden") && paletteInput) {
+      paletteInput.setAttribute("placeholder", t("palettePh"));
+      renderPalette();
+    }
   };
-  const toggleLanguage = () => setLanguage(root.lang === "tr" ? "en" : "tr");
+
+  const toggleLanguage = () => setLanguage(lang() === "tr" ? "en" : "tr");
   languageButton?.addEventListener("click", toggleLanguage);
   mobileLanguageButton?.addEventListener("click", toggleLanguage);
-  setLanguage(localStorage.getItem("mcd-language") || "tr");
 
   /* ---------- Tema tercihi ---------- */
   const THEMES = ["night", "contrast", "soft"];
   const themeButton = $("#theme-button");
-  const savedTheme = localStorage.getItem("mcd-theme");
+  const savedTheme = (() => { try { return localStorage.getItem("mcd-theme"); } catch { return null; } })();
   const setTheme = (theme) => {
     const next = THEMES.includes(theme) ? theme : "night";
     root.dataset.theme = next;
-    localStorage.setItem("mcd-theme", next);
-    if (themeButton) themeButton.textContent = next === "soft" ? "☼" : next === "contrast" ? "◑" : "◐";
-    if (themeButton) themeButton.setAttribute("aria-label", `Tema: ${next}. Değiştirmek için tıkla`);
+    try { localStorage.setItem("mcd-theme", next); } catch {}
+    const icon = next === "soft" ? "☼" : next === "contrast" ? "◑" : "◐";
+    if (themeButton) {
+      themeButton.textContent = icon;
+      themeButton.setAttribute("aria-label", `${t("themeAria")} ${t(next === "night" ? "themeNight" : next === "contrast" ? "themeContrast" : "themeSoft")}`);
+    }
   };
   setTheme(savedTheme || "night");
   themeButton?.addEventListener("click", () => {
     const next = THEMES[(THEMES.indexOf(root.dataset.theme) + 1) % THEMES.length];
     setTheme(next);
-    toast(`Tema: ${next === "night" ? "gece" : next === "contrast" ? "yüksek kontrast" : "yumuşak"}`);
+    toast(t("themeToast").replace("{theme}", t(next === "night" ? "themeNight" : next === "contrast" ? "themeContrast" : "themeSoft")));
   });
 
   /* ---------- Scroll ilerleme çubuğu + küçülen menü ---------- */
@@ -232,7 +566,7 @@
   }
 
   /* ---------- Scroll reveal ---------- */
-  const revealEls = $$('[data-reveal]');
+  const revealEls = $$("[data-reveal]");
 
   if (revealEls.length) {
     const io = new IntersectionObserver(
@@ -253,7 +587,7 @@
   }
 
   /* ---------- Sayaçlar (data-count) ---------- */
-  const counters = $$('[data-count]');
+  const counters = $$("[data-count]");
 
   if (counters.length) {
     const runCount = (el) => {
@@ -319,64 +653,60 @@
     requestAnimationFrame(tick);
   };
 
-  $$('[data-scramble]').forEach((el) => {
+  $$("[data-scramble]").forEach((el) => {
     scramble(el);
     el.addEventListener("pointerenter", () => scramble(el));
   });
 
-  /* ---------- Hero durumu: daktilo efekti ---------- */
+  /* ---------- Hero durumu: daktilo efekti (dile duyarlı) ---------- */
   const statusEl = $("#hero-status");
-  const STATUSES = [
-    "online, muhtemelen kod yazıyor",
-    "bug ile pazarlık yapıyor",
-    "kahve molasında (kısa sürer)",
-    "commit mesajı düşünüyor",
-    "dark mode'da felsefe yapıyor",
-    "tab'ları kapatmayı reddediyor",
-    "oirat'ta ortalığı sakinleştiriyor",
-    "guard bot'a yeni numara öğretiyor",
-  ];
+  let statusTimer = 0;
+  let statusVersion = 0;
 
-  if (statusEl) {
+  const startStatusTyping = () => {
+    if (!statusEl) return;
+    const version = ++statusVersion;
+    clearTimeout(statusTimer);
+    const list = i18n[lang()].statuses;
+
     if (reduceMotion) {
-      statusEl.textContent = STATUSES[0];
-    } else {
-      let si = 0;
-      let ci = 0;
-      let deleting = false;
-
-      const type = () => {
-        const text = STATUSES[si];
-        ci += deleting ? -1 : 1;
-        statusEl.textContent = text.slice(0, ci);
-
-        let delay = deleting ? 26 : 46;
-        if (!deleting && ci === text.length) {
-          delay = 2600;
-          deleting = true;
-        } else if (deleting && ci === 0) {
-          deleting = false;
-          si = (si + 1) % STATUSES.length;
-          delay = 400;
-        }
-        setTimeout(type, delay);
-      };
-
-      type();
+      statusEl.textContent = list[0];
+      return;
     }
-  }
+
+    let si = 0;
+    let ci = 0;
+    let deleting = false;
+
+    const type = () => {
+      if (version !== statusVersion) return;
+      const text = list[si];
+      ci += deleting ? -1 : 1;
+      statusEl.textContent = text.slice(0, ci);
+
+      let delay = deleting ? 26 : 46;
+      if (!deleting && ci === text.length) {
+        delay = 2600;
+        deleting = true;
+      } else if (deleting && ci === 0) {
+        deleting = false;
+        si = (si + 1) % list.length;
+        delay = 400;
+      }
+      if (version === statusVersion) statusTimer = setTimeout(type, delay);
+    };
+
+    type();
+  };
 
   /* ---------- Profil kartında canlı saat ---------- */
   const clockEl = $("#local-clock");
 
-  if (clockEl) {
-    const fmt = new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit" });
-    const tickClock = () => {
-      clockEl.textContent = fmt.format(new Date());
-    };
-    tickClock();
-    setInterval(tickClock, 15000);
-  }
+  const tickClock = () => {
+    if (clockEl) clockEl.textContent = clockFmt.format(new Date());
+  };
+  tickClock();
+  setInterval(tickClock, 15000);
 
   /* ---------- Discord sohbeti: yazıyor → mesaj ---------- */
   const chat = $("#chat-thread");
@@ -524,7 +854,7 @@
 
   /* ---------- 3D tilt + parlama (yumuşatılmış) ---------- */
   if (finePointer && !reduceMotion) {
-    $$('[data-tilt]').forEach((card) => {
+    $$("[data-tilt]").forEach((card) => {
       const glare = doc.createElement("span");
       glare.className = "glare";
       card.append(glare);
@@ -573,7 +903,7 @@
 
   /* ---------- Manyetik butonlar ---------- */
   if (finePointer && !reduceMotion) {
-    $$('[data-magnetic]').forEach((btn) => {
+    $$("[data-magnetic]").forEach((btn) => {
       let tx = 0, ty = 0;
       let cx = 0, cy = 0;
       let raf = 0;
@@ -626,7 +956,7 @@
     }
   };
 
-  $$('[data-confetti]').forEach((el) => {
+  $$("[data-confetti]").forEach((el) => {
     el.addEventListener("click", (e) => burst(e.clientX, e.clientY));
   });
 
@@ -649,12 +979,12 @@
   };
 
   /* ---------- E-posta kopyalama ---------- */
-  $$('[data-copy]').forEach((el) => {
+  $$("[data-copy]").forEach((el) => {
     el.addEventListener("click", async (e) => {
       e.preventDefault();
       try {
         await navigator.clipboard.writeText(el.dataset.copy);
-        toast("E-posta panoya kopyalandı ✨");
+        toast(t("copyToast"));
         burst(e.clientX, e.clientY, 10);
       } catch {
         location.href = `mailto:${el.dataset.copy}`;
@@ -679,25 +1009,30 @@
   /* ---------- Proje detay modalı ---------- */
   const projectModal = $("#project-modal");
   const projectData = {
-    portfolio: { kicker: PROJECTS.portfolio.kicker, title: PROJECTS.portfolio.title, description: PROJECTS.portfolio.description, problem: PROJECTS.portfolio.problem, solution: PROJECTS.portfolio.solution, tags: PROJECTS.portfolio.tags, status: PROJECTS.portfolio.status, link: PROJECTS.portfolio.link },
-    profile: { kicker: PROJECTS.profile.kicker, title: PROJECTS.profile.title, description: PROJECTS.profile.description, problem: PROJECTS.profile.problem, solution: PROJECTS.profile.solution, tags: PROJECTS.profile.tags, status: PROJECTS.profile.status, link: PROJECTS.profile.link },
+    moderation: { kicker: "modKicker", title: "modTitle", description: "modDesc", problem: "modProblem", solution: "modSolution", tags: ["Discord.js", "Node.js", "MongoDB"], status: "modStatus" },
+    guard: { kicker: "modKicker", title: "guardTitle", description: "guardDesc", problem: "guardProblem", solution: "guardSolution", tags: ["Discord.js", "TypeScript", "Redis"], status: "guardStatus" },
   };
   const modalFields = { kicker: $("#project-modal-kicker"), title: $("#project-modal-title"), description: $("#project-modal-description"), problem: $("#project-modal-problem"), solution: $("#project-modal-solution"), tags: $("#project-modal-tags"), status: $("#project-modal-status") };
-  const modalLink = projectModal?.querySelector('a[href^="https://github.com/"]');
   let lastProjectTrigger = null;
   const closeProjectModal = () => { projectModal?.classList.add("hidden"); projectModal?.classList.remove("flex"); lastProjectTrigger?.focus(); };
   const openProjectModal = (key, trigger) => {
     const data = projectData[key];
     if (!projectModal || !data) return;
     lastProjectTrigger = trigger;
-    Object.entries(modalFields).forEach(([field, el]) => { if (field !== "tags" && el) el.textContent = data[field]; });
-    if (modalFields.tags) { modalFields.tags.innerHTML = ""; data.tags.forEach((tag) => { const el = doc.createElement("span"); el.className = "rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint"; el.textContent = tag; modalFields.tags.append(el); }); }
-    if (modalLink) {
-      modalLink.href = data.link;
-      modalLink.textContent = "Repo'yu aç ↗";
-      modalLink.setAttribute("aria-label", `${data.title} reposunu aç`);
+    Object.entries(modalFields).forEach(([field, el]) => {
+      if (field !== "tags" && el) el.textContent = t(data[field]);
+    });
+    if (modalFields.tags) {
+      modalFields.tags.innerHTML = "";
+      data.tags.forEach((tag) => {
+        const el = doc.createElement("span");
+        el.className = "rounded-lg bg-mint/15 px-3 py-2 text-xs text-mint";
+        el.textContent = tag;
+        modalFields.tags.append(el);
+      });
     }
-    projectModal.classList.remove("hidden"); projectModal.classList.add("flex"); $("#project-modal-close")?.focus();
+    projectModal.classList.remove("hidden"); projectModal.classList.add("flex");
+    $("#project-modal-close")?.focus();
   };
   $$(".project-details").forEach((button) => button.addEventListener("click", () => openProjectModal(button.dataset.project, button)));
   $("#project-modal-close")?.addEventListener("click", closeProjectModal);
@@ -705,17 +1040,18 @@
   addEventListener("keydown", (e) => { if (e.key === "Escape" && projectModal && !projectModal.classList.contains("hidden")) closeProjectModal(); });
 
   /* ---------- Proje filtreleri ---------- */
-  const projectFilters = $$('[data-filter]');
+  const projectFilters = $$("[data-filter]");
   const projectCards = $$('[data-project-category]');
-  const projectCount = $("#project-count");
+  const projectCountEl = $("#project-count");
+  let shownCount = projectCards.length || 2;
 
   if (projectFilters.length && projectCards.length) {
     const applyFilter = (filter) => {
       let visible = 0;
       projectFilters.forEach((button) => {
-        const active = button.dataset.filter === filter;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", String(active));
+        const a = button.dataset.filter === filter;
+        button.classList.toggle("is-active", a);
+        button.setAttribute("aria-pressed", String(a));
       });
       projectCards.forEach((card) => {
         const show = filter === "all" || card.dataset.projectCategory === filter;
@@ -723,7 +1059,8 @@
         card.setAttribute("aria-hidden", String(!show));
         if (show) visible++;
       });
-      if (projectCount) projectCount.textContent = `${visible} proje gösteriliyor`;
+      shownCount = visible;
+      if (projectCountEl) projectCountEl.textContent = `${visible} ${t("countSuffix")}`;
     };
 
     projectFilters.forEach((button) => {
@@ -741,7 +1078,7 @@
     ki = 0;
     doc.body.classList.toggle("party");
     burst(innerWidth / 2, innerHeight / 2, 26);
-    toast(doc.body.classList.contains("party") ? "Parti modu açıldı 🎉" : "Parti bitti, işe dönüyoruz 🧑‍💻");
+    toast(doc.body.classList.contains("party") ? t("partyOn") : t("partyOff"));
   });
 
   /* ---------- Komut paleti (Ctrl+K) ---------- */
@@ -750,49 +1087,52 @@
   const paletteList = $("#palette-list");
 
   if (palette && paletteInput && paletteList) {
-    const norm = (s) => s.toLocaleLowerCase("tr-TR");
+    const norm = (s) => s.toLocaleLowerCase("en-US");
     const goTo = (sel) => $(sel)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
 
-    const ACTIONS = [
-      { label: "# hakkımda bölümüne git", hint: "bölüm", run: () => goTo("#about") },
-      { label: "# projeler bölümüne git", hint: "bölüm", run: () => goTo("#projects") },
-      { label: "# setup bölümüne git", hint: "bölüm", run: () => goTo("#setup") },
-      { label: "# terminal bölümüne git", hint: "bölüm", run: () => goTo("#terminal") },
-      { label: "# iletişim bölümüne git", hint: "bölüm", run: () => goTo("#contact") },
-      { label: "Sayfanın başına dön", hint: "bölüm", run: () => scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }) },
+    const buildActions = () => [
+      { label: t("plAbout"), hint: t("hintSection"), run: () => goTo("#about") },
+      { label: t("plProjects"), hint: t("hintSection"), run: () => goTo("#projects") },
+      { label: t("plSetup"), hint: t("hintSection"), run: () => goTo("#setup") },
+      { label: t("plTerminal"), hint: t("hintSection"), run: () => goTo("#terminal") },
+      { label: t("plContact"), hint: t("hintSection"), run: () => goTo("#contact") },
+      { label: t("plServices"), hint: t("hintSection"), run: () => goTo("#services") },
+      { label: t("plTop"), hint: t("hintSection"), run: () => scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }) },
       {
-        label: "E-postayı kopyala",
-        hint: "aksiyon",
+        label: t("plCopyEmail"),
+        hint: t("hintAction"),
         run: async () => {
           try {
             await navigator.clipboard.writeText("mcdinspace@gmail.com");
-            toast("E-posta panoya kopyalandı ✨");
+            toast(t("copyToast"));
           } catch {
             location.href = "mailto:mcdinspace@gmail.com";
           }
         },
       },
-      { label: "GitHub profilini aç (mcd4hell)", hint: "link", run: () => open("https://github.com/mcd4hell", "_blank", "noopener") },
-      { label: "Gece temasına geç", hint: "tema", run: () => setTheme("night") },
-      { label: "Switch to English", hint: "language", run: () => setLanguage("en") },
-      { label: "Türkçeye geç", hint: "dil", run: () => setLanguage("tr") },
-      { label: "Yüksek kontrast temasına geç", hint: "tema", run: () => setTheme("contrast") },
-      { label: "Yumuşak temaya geç", hint: "tema", run: () => setTheme("soft") },
-      { label: "MCD.dev repo detaylarını aç", hint: "proje", run: () => openProjectModal("portfolio") },
-      { label: "GitHub profile README detaylarını aç", hint: "proje", run: () => openProjectModal("profile") },
-      { label: "Hizmetler bölümüne git", hint: "bölüm", run: () => goTo("#services") },
-      { label: "Konfeti patlat", hint: "eğlence", run: () => burst(innerWidth / 2, innerHeight / 3, 20) },
+      { label: t("plGitHub"), hint: t("hintLink"), run: () => open("https://github.com/mcd4hell", "_blank", "noopener") },
+      { label: t("plDiscord"), hint: t("hintLink"), run: () => open("https://discord.gg/oirat", "_blank", "noopener") },
+      { label: t("plRefresh"), hint: t("hintAction"), run: () => { fetchLanyard(); toast(t("refreshToast")); } },
+      { label: t("plNight"), hint: t("hintTheme"), run: () => setTheme("night") },
+      { label: t("plContrast"), hint: t("hintTheme"), run: () => setTheme("contrast") },
+      { label: t("plSoft"), hint: t("hintTheme"), run: () => setTheme("soft") },
+      { label: t("plTR"), hint: t("hintLang"), run: () => setLanguage("tr") },
+      { label: t("plEN"), hint: t("hintLang"), run: () => setLanguage("en") },
+      { label: t("plMod"), hint: t("hintProject"), run: () => openProjectModal("moderation") },
+      { label: t("plGuard"), hint: t("hintProject"), run: () => openProjectModal("guard") },
+      { label: t("plConfetti"), hint: t("hintFun"), run: () => burst(innerWidth / 2, innerHeight / 3, 20) },
       {
-        label: "Parti modunu aç/kapat",
-        hint: "eğlence",
+        label: t("plParty"),
+        hint: t("hintFun"),
         run: () => {
           doc.body.classList.toggle("party");
           burst(innerWidth / 2, innerHeight / 2, 26);
+          toast(doc.body.classList.contains("party") ? t("partyOn") : t("partyOff"));
         },
       },
     ];
 
-    let filtered = ACTIONS;
+    let filtered = buildActions();
     let active = 0;
 
     const paint = () => {
@@ -807,12 +1147,12 @@
       a.run();
     };
 
-    const render = () => {
+    const renderPalette = () => {
       paletteList.innerHTML = "";
       if (!filtered.length) {
         const li = doc.createElement("li");
         li.className = "px-3 py-6 text-center text-muted";
-        li.textContent = "Hiçbir şey bulunamadı 🤷";
+        li.textContent = t("paletteEmpty");
         paletteList.append(li);
         return;
       }
@@ -839,9 +1179,9 @@
       palette.classList.remove("hidden");
       palette.classList.add("flex");
       paletteInput.value = "";
-      filtered = ACTIONS;
+      filtered = buildActions();
       active = 0;
-      render();
+      renderPalette();
       paletteInput.focus();
     };
 
@@ -855,9 +1195,9 @@
 
     paletteInput.addEventListener("input", () => {
       const q = norm(paletteInput.value.trim());
-      filtered = q ? ACTIONS.filter((a) => norm(a.label).includes(q)) : ACTIONS;
+      filtered = q ? buildActions().filter((a) => norm(a.label).includes(q)) : buildActions();
       active = 0;
-      render();
+      renderPalette();
     });
 
     addEventListener("keydown", (e) => {
@@ -886,10 +1226,11 @@
     });
   }
 
-  /* ---------- İnteraktif terminal ---------- */
+  /* ---------- İnteraktif terminal (dile duyarlı) ---------- */
   const termIn = $("#term-in");
   const termOut = $("#term-out");
   const termBody = $("#term-body");
+  let bootTerminal = null;
 
   if (termIn && termOut && termBody) {
     const print = (text, cls = "") => {
@@ -901,59 +1242,62 @@
     };
 
     const COMMANDS = {
-      help: () => print("komutlar: whoami · projects · filter <tümü|web|profil> · stack · lang <tr|en> · services · theme · oirat · github · setup · contact · coffee · party · ls · date · echo <mesaj> · clear", "text-muted"),
-      whoami: () => print("MCD (mcd4hell) — full-stack developer, Oirat kurucusu. TypeScript sever, bug'larla pazarlık eder."),
+      help: () => print(t("termHelpCmd"), "text-muted"),
+      whoami: () => print(t("termWhoami")),
       projects: () => {
-        print("• MCD.dev          — açık kaynak portföy sitesi");
-        print("• GitHub README    — profil vitrini, stack ve istatistikler");
-        print("private tarafta botlar hâlâ iş başında 🤫", "text-muted");
+        print(t("termProjects1"));
+        print(t("termProjects2"));
+        print(t("termRest"), "text-muted");
       },
       filter: (value) => {
-        const aliases = { tümü: "all", all: "all", web: "web", profil: "profile", profile: "profile" };
+        const aliases = { tümü: "all", all: "all", bot: "bot", web: "web", araç: "tool", tool: "tool" };
         const key = aliases[value?.toLocaleLowerCase("tr-TR") || "all"];
         const button = key && $(`[data-filter="${key}"]`);
         if (button) {
           button.click();
-          print(`proje filtresi: ${value}`);
-        } else print("kullanım: filter tümü | web | profil", "text-muted");
+          print(t("termFilterSet").replace("{v}", value || key));
+        } else print(t("termFilterUsage"), "text-muted");
       },
-      stack: () => print("TypeScript · React · Next.js · Node.js · Tailwind · PostgreSQL · Docker"),
+      stack: () => print(t("termStack")),
       oirat: () => {
-        print("⚔️ Oirat — MCD'nin Discord sunucusu.");
-        print("Moderation bot düzeni sağlar, Guard bot kapıda bekler. İkisi de burada yazıldı.");
+        print(t("termOirat1"));
+        print(t("termOirat2"));
       },
       github: () => {
-        print("github.com/mcd4hell açılıyor...");
+        print(t("termGitHub"));
         open("https://github.com/mcd4hell", "_blank", "noopener");
       },
-      setup: () => print("VS Code + Tailwind + Tame Impala + kahve. Denenmiş, onaylanmış."),
-      services: () => print("web deneyimleri · bot & otomasyon · ürünleştirme"),
+      setup: () => print(t("termSetup")),
+      services: () => print(t("termServices")),
       lang: (value) => setLanguage(value?.toLocaleLowerCase("tr-TR") === "en" ? "en" : "tr"),
       theme: (value) => {
         const aliases = { gece: "night", night: "night", kontrast: "contrast", contrast: "contrast", yumuşak: "soft", soft: "soft" };
         const next = aliases[value?.toLocaleLowerCase("tr-TR") || ""];
-        if (next) { setTheme(next); print(`tema: ${next}`); } else print("kullanım: theme gece | kontrast | yumuşak", "text-muted");
+        if (next) {
+          setTheme(next);
+          print(t("termThemeSet").replace("{v}", t(next === "night" ? "themeNight" : next === "contrast" ? "themeContrast" : "themeSoft")));
+        } else print(t("termThemeUsage"), "text-muted");
       },
-      about: () => print("MCD — full-stack developer, Oirat kurucusu. Temiz kod, küçük sürprizler."),
-      contact: () => print("mcdinspace@gmail.com — DM kutusu her zaman açık."),
+      about: () => print(t("termAbout")),
+      contact: () => print(t("termContact")),
       coffee: () => {
-        print("☕ demleniyor... tamamdır. Verimlilik +%12.");
+        print(t("termCoffee"));
         burst(innerWidth / 2, innerHeight / 2, 10);
       },
       party: () => {
         doc.body.classList.toggle("party");
-        print(doc.body.classList.contains("party") ? "🎉 parti modu: AÇIK" : "parti modu: kapalı. işe dönüyoruz.");
+        print(doc.body.classList.contains("party") ? t("termPartyOn") : t("termPartyOff"));
       },
-      ls: () => print("projeler/  github-profile/  setup/  private-lab/  (247 öğe)"),
-      date: () => print(new Date().toLocaleString("tr-TR")),
+      ls: () => print(t("termLs")),
+      date: () => print(new Date().toLocaleString(lang() === "tr" ? "tr-TR" : "en-US")),
       clear: () => {
         termOut.innerHTML = "";
       },
-      sudo: () => print("Güzel deneme. Burada root benim. 😎", "text-red-300"),
-      exit: () => print("Buradan çıkış yok, kaydırmaya devam. 🙃", "text-muted"),
+      sudo: () => print(t("termSudo"), "text-red-300"),
+      exit: () => print(t("termExit"), "text-muted"),
     };
 
-    print("MCD terminaline hoş geldin. 'help' yazarak başla.", "text-muted");
+    bootTerminal = () => print(t("termWelcome"), "text-muted");
 
     termBody.addEventListener("click", () => termIn.focus());
 
@@ -999,7 +1343,7 @@
       if (key === "echo") print(rest.join(" "));
       else if (["filter", "theme", "lang"].includes(key)) COMMANDS[key](rest.join(" "));
       else if (COMMANDS[key]) COMMANDS[key]();
-      else print(`komut bulunamadı: ${cmd} — 'help' dene`, "text-red-300");
+      else print(t("termUnknown").replace("{cmd}", cmd), "text-red-300");
     });
   }
 
@@ -1023,7 +1367,7 @@
         const cell = doc.createElement("i");
         cell.className = "contrib-cell";
         cell.dataset.level = String(level);
-        const label = commits ? `${commits} commit` : "dinlenme günü";
+        const label = commits ? `${commits} ${t("heatUnit")}` : t("heatRest");
         cell.title = label;
         cell.setAttribute("aria-label", label);
         cell.setAttribute("role", "img");
@@ -1032,38 +1376,53 @@
     }
 
     contrib.append(frag);
-    if (totalEl) totalEl.textContent = total.toLocaleString("tr-TR");
+    if (totalEl) totalEl.textContent = total.toLocaleString(lang() === "tr" ? "tr-TR" : "en-US");
   }
 
-  /* ---------- Şu an çalıyor ---------- */
+  /* ---------- Şu an çalıyor (Lanyard canlı verisi ya da demo) ---------- */
   const npTrack = $("#np-track");
   const npBar = $("#np-bar");
+  const spotifyProgressEl = $("#spotify-progress");
+  const spotifyElapsedEl = $("#spotify-elapsed");
+  const spotifyTotalEl = $("#spotify-total");
+  const TRACKS = [
+    "Tame Impala — The Less I Know The Better",
+    "Tame Impala — Let It Happen",
+    "Tame Impala — Borderline",
+    "Daft Punk — Something About Us",
+    "Mac DeMarco — Chamber of Reflection",
+  ];
 
   if (npTrack && npBar) {
-    const TRACKS = [
-      "Tame Impala — The Less I Know The Better",
-      "Tame Impala — Let It Happen",
-      "Tame Impala — Borderline",
-      "Daft Punk — Something About Us",
-      "Mac DeMarco — Chamber of Reflection",
-    ];
-
     if (reduceMotion) {
       npBar.style.width = "40%";
     } else {
       const DUR = 24000;
       let ti = 0;
-      let start = performance.now();
+      let npStart = performance.now();
 
       const tick = (now) => {
-        let p = (now - start) / DUR;
-        if (p >= 1) {
-          start = now;
-          p = 0;
-          ti = (ti + 1) % TRACKS.length;
-          npTrack.textContent = TRACKS[ti];
+        const sp = lanyard?.spotify;
+        if (sp && sp.timestamps && sp.timestamps.start && sp.timestamps.end) {
+          const p = (now - sp.timestamps.start) / (sp.timestamps.end - sp.timestamps.start);
+          npBar.style.width = `${Math.min(Math.max(p, 0), 1) * 100}%`;
+          npTrack.textContent = `🎵 ${sp.song} — ${sp.artist}`;
+          if (spotifyProgressEl && spotifyElapsedEl && spotifyTotalEl) {
+            spotifyProgressEl.style.width = `${Math.min(Math.max(p, 0), 1) * 100}%`;
+            const fmtTime = (ms) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+            spotifyElapsedEl.textContent = fmtTime(Math.max(now - sp.timestamps.start, 0));
+            spotifyTotalEl.textContent = fmtTime(Math.max(sp.timestamps.end - sp.timestamps.start, 0));
+          }
+        } else {
+          let p = (now - npStart) / DUR;
+          if (p >= 1) {
+            npStart = now;
+            p = 0;
+            ti = (ti + 1) % TRACKS.length;
+            if (!lanyard?.spotify) npTrack.textContent = TRACKS[ti];
+          }
+          npBar.style.width = `${(p % 1) * 100}%`;
         }
-        npBar.style.width = `${p * 100}%`;
         requestAnimationFrame(tick);
       };
 
@@ -1071,11 +1430,141 @@
     }
   }
 
-  /* ---------- Sekme başlığı ---------- */
-  const baseTitle = doc.title;
+  /* ---------- Lanyard: canlı Discord durumu ---------- */
+  const LANYARD_ID = "1028208350489485322";
+  let lanyard = null;
+  let lanyardRefreshing = false;
 
+  const lanyardEnabled = () => LANYARD_ID !== "REPLACE_WITH_YOUR_DISCORD_USER_ID";
+
+  const fetchLanyard = async () => {
+    if (!lanyardEnabled() || lanyardRefreshing) return;
+    lanyardRefreshing = true;
+    try {
+      const res = await fetch(`https://api.lanyard.rest/v1/users/${LANYARD_ID}`, { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        lanyard = json && json.data ? json.data : null;
+        syncPresence();
+      }
+    } catch { /* sessizce geç */ }
+    lanyardRefreshing = false;
+  };
+
+  const syncPresence = () => {
+    const status = lanyard ? (lanyard.discord_status || "offline") : "online";
+    const label = { online: t("presOnline"), idle: t("presIdle"), dnd: t("presDnd"), offline: t("presOffline") }[status] || status;
+
+    $$("[data-presence]").forEach((el) => { el.dataset.presence = status; });
+
+    const spotify = lanyard?.spotify;
+    const activity = (lanyard?.activities || []).find((a) => a && a.type !== 4);
+
+    const presenceText = $("#presence-text");
+    if (presenceText) {
+      if (spotify) presenceText.textContent = label;
+      else if (activity) presenceText.textContent = `${activity.emoji?.name || "🎮"} ${activity.name}`;
+      else presenceText.textContent = label;
+    }
+
+    const contactText = $("#contact-presence-text");
+    if (contactText) contactText.textContent = t(status === "online" ? "contactOnline" : status === "idle" ? "contactIdle" : status === "dnd" ? "contactDnd" : "contactOffline");
+
+    const memberStatus = $("#member-mcd-status");
+    if (memberStatus) {
+      if (spotify) memberStatus.textContent = `🎧 ${spotify.song}`;
+      else if (activity) memberStatus.textContent = activity.name;
+      else memberStatus.textContent = t("memberMcdStatus");
+    }
+
+    /* Discord kartı: gerçek profil verisi (avatar, isim, bio, üyelik tarihi) */
+    const user = lanyard?.discord_user || null;
+
+    const avatarEl = $("#discord-avatar");
+    if (avatarEl && user && user.avatar) {
+      const ext = user.avatar.startsWith("a_") ? "gif" : "png";
+      avatarEl.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=256`;
+    }
+
+    const nameEl = $("#discord-name");
+    if (nameEl && user) nameEl.textContent = user.global_name || user.display_name || user.username || nameEl.textContent;
+
+    const usernameEl = $("#discord-username");
+    if (usernameEl && user) {
+      const tag = user.discriminator && user.discriminator !== "0" ? `${user.username}#${user.discriminator}` : user.username;
+      usernameEl.textContent = tag || usernameEl.textContent;
+    }
+
+    const guildTagEl = $("#discord-guild-tag");
+    if (guildTagEl && user) {
+      const guildTag = user.primary_guild?.tag;
+      if (guildTag) {
+        guildTagEl.textContent = guildTag;
+        guildTagEl.classList.remove("hidden");
+      } else {
+        guildTagEl.classList.add("hidden");
+      }
+    }
+
+    const customEl = $("#discord-custom-status");
+    if (customEl) {
+      const custom = (lanyard?.activities || []).find((a) => a && a.type === 4);
+      if (custom && custom.state) {
+        customEl.textContent = `${custom.emoji?.name || ""} ${custom.state}`.trim();
+        customEl.classList.remove("hidden");
+      } else {
+        customEl.classList.add("hidden");
+      }
+    }
+
+    const bioEl = $("#discord-bio");
+    if (bioEl) {
+      const realBio = (user && (user.bio || lanyard.bio)) || "";
+      if (realBio) bioEl.textContent = realBio;
+    }
+
+    const spotifyWidgetEl = $("#spotify-widget");
+    if (spotifyWidgetEl) {
+      if (spotify) {
+        const albumArtEl = $("#spotify-album-art");
+        if (albumArtEl) albumArtEl.src = spotify.album_art_url || "";
+        const songEl = $("#spotify-song");
+        if (songEl) songEl.textContent = spotify.song || "";
+        const artistEl = $("#spotify-artist");
+        if (artistEl) artistEl.textContent = spotify.artist || "";
+        spotifyWidgetEl.classList.remove("hidden");
+      } else {
+        spotifyWidgetEl.classList.add("hidden");
+      }
+    }
+
+    const createdEl = $("#discord-created");
+    if (createdEl) {
+      let date = null;
+      if (user) {
+        if (user.created_at) date = new Date(user.created_at);
+        else if (user.id) date = new Date(user.id / 4194304 + 1420070400000);
+      }
+      const fmt = date && !isNaN(date) ? new Intl.DateTimeFormat(lang() === "tr" ? "tr-TR" : "en-US", { dateStyle: "long" }).format(date) : t("cardMemberText");
+      createdEl.textContent = fmt;
+    }
+
+    const bannerEl = $("#discord-banner");
+    if (bannerEl && user) {
+      if (user.banner) {
+        const ext = user.banner.startsWith("a_") ? "gif" : "png";
+        bannerEl.style.backgroundImage = `url(https://cdn.discordapp.com/banners/${user.id}/${user.banner}.${ext}?size=512)`;
+      } else if (user.banner_color) {
+        bannerEl.style.background = user.banner_color;
+      }
+    }
+
+    if (npTrack && spotify) npTrack.textContent = `🎵 ${spotify.song} — ${spotify.artist}`;
+  };
+
+  /* ---------- Sekme başlığı ---------- */
   doc.addEventListener("visibilitychange", () => {
-    doc.title = doc.hidden ? "gitme 🥺 — MCD" : baseTitle;
+    doc.title = doc.hidden ? t("tabAway") : baseTitle;
   });
 
   /* ---------- Konsol imzası ---------- */
@@ -1084,4 +1573,12 @@
     "background:#58f2aa;color:#04120b;font-weight:bold;border-radius:4px 0 0 4px;padding:4px 8px",
     "background:#161a26;color:#dbe0e6;border-radius:0 4px 4px 0;padding:4px 8px"
   );
+
+  /* ---------- Başlangıç: dil + Lanyard ---------- */
+  const savedLang = (() => { try { return localStorage.getItem("mcd-language"); } catch { return null; } })();
+  setLanguage(savedLang || "tr");
+  bootTerminal?.();
+  fetchLanyard();
+  setInterval(fetchLanyard, 60000);
+  doc.addEventListener("visibilitychange", () => { if (!doc.hidden) fetchLanyard(); });
 })();

@@ -568,6 +568,32 @@ body.party {
   50% { transform: scaleY(1); }
 }
 
+/* ---------- Canlı Discord durumu (Lanyard) ---------- */
+
+[data-presence] {
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+[data-presence="online"] {
+  background: #23d18b;
+  box-shadow: 0 0 8px rgba(35, 209, 139, 0.55);
+}
+
+[data-presence="idle"] {
+  background: #f0b232;
+  box-shadow: 0 0 8px rgba(240, 178, 50, 0.45);
+}
+
+[data-presence="dnd"] {
+  background: #f06666;
+  box-shadow: 0 0 8px rgba(240, 102, 102, 0.45);
+}
+
+[data-presence="offline"] {
+  background: #80848e;
+  box-shadow: none;
+}
+
 /* ---------- Terminal ---------- */
 
 #term-body::-webkit-scrollbar {
