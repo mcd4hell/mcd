@@ -6,9 +6,10 @@ Kişisel portföy sitem: projeler, botlar ve iletişim. Sade, hızlı ve SEO dos
 
 ## Tasarım
 
-- Pastel renk havuzları üzerinde liquid glass yüzeyler (menü, iletişim paneli)
-- Başlığın üstünde gezinen cam mercek: altındaki yazıyı büyütür, imleci takip eder. Her tarayıcıda (Safari ve iPhone dahil) aynı çalışır
-- Tek yazı ailesi: Bricolage Grotesque (sitede barındırılan değişken font, Türkçe karakter desteğiyle)
+- OLED siyah zemin (`#000`): OLED ekranlarda pikseller tamamen kapalı
+- Hero'da WebGL ile çizilen sıvı cam damla: arkasındaki dev MCD yazısını kırarak büyütür, kenarlarında lila / nane / şeftali yansımalar, imleci takip eder. WebGL yoksa CSS ile çizilmiş bir cam yedekte durur
+- Öne çıkan proje (Yaprak Doktoru) gerçek ekran görüntüsüyle, diğerleri ince çizgili bir liste
+- Yazılar: Anybody (geniş, değişken başlık fontu) ve Hanken Grotesk, ikisi de sitede barındırılıyor ve Türkçe karakterli
 - `prefers-reduced-motion` ve `prefers-reduced-transparency` desteklenir
 
 ## SEO
@@ -24,8 +25,9 @@ Kişisel portföy sitem: projeler, botlar ve iletişim. Sade, hızlı ve SEO dos
 ```
 index.html        sayfa
 styles.css        tüm stiller
-main.js           mercek, kaydırma animasyonu, aktif menü (~5 KB)
-fonts/            Bricolage Grotesque (latin + latin-ext)
+main.js           WebGL cam damla, satır parıltısı, aktif menü
+fonts/            Anybody + Hanken Grotesk (latin + latin-ext)
+img/              proje ekran görüntüleri (WebP)
 og.png            paylaşım görseli
 favicon.svg, apple-touch-icon.png, site.webmanifest
 robots.txt, sitemap.xml, 404.html

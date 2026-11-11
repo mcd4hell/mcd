@@ -5,8 +5,8 @@
   "start_url": "/mcd/",
   "scope": "/mcd/",
   "display": "standalone",
-  "background_color": "#f6f3fb",
-  "theme_color": "#f6f3fb",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" },
     { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
