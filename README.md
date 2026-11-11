@@ -1,85 +1,45 @@
-# 👾 MCD Web
+# MCD
 
-> 💬 **Açık kaynaklı kişisel portföy ve internet köşesi.**
+Kişisel portföy sitem: projeler, botlar ve iletişim. Sade, hızlı ve SEO dostu tek sayfa.
 
-Discord'dan ilham alan, tek sayfalık kişisel portföy sitesi. Selam, ben MCD! 👋
+**Canlı:** https://mcd4hell.github.io/mcd/
 
-🔗 **Canlı site:** https://mcd4hell.github.io/mcd/
+## Tasarım
 
----
+- Pastel renk havuzları üzerinde liquid glass yüzeyler (menü, iletişim paneli)
+- Başlığın üstünde gezinen cam mercek: altındaki yazıyı büyütür, imleci takip eder. Her tarayıcıda (Safari ve iPhone dahil) aynı çalışır
+- Tek yazı ailesi: Bricolage Grotesque (sitede barındırılan değişken font, Türkçe karakter desteğiyle)
+- `prefers-reduced-motion` ve `prefers-reduced-transparency` desteklenir
 
-## ✨ Özellikler
+## SEO
 
-- 🎮 **Discord'dan ilham alan tasarım** — profil kartı, sunucu görünümü, kanal listesi ve sahte bot mesajlarıyla
-- 🌀 **Scroll reveal animasyonları** — sayfa kaydırdıkça içerikler yumuşakça beliriyor
-- 🧲 **Magnetic butonlar & 3D tilt kartlar** — fareyi takip eden etkileşimli elemanlar
-- 🎉 **Konfeti efekti** — tıkla ve kutla!
-- 🔀 **Text scramble** — yazılar karışıp çözülerek geliyor
-- 🕹️ **Konami kodu sürprizi** — ↑ ↑ ↓ ↓ ← → ← → B A 😉
-- 🧩 **Kaynak/derleme ayrımı** — okunabilir kaynak dosyaları ve yayın çıktıları birlikte tutulur
-- 📱 **Tam responsive** — mobil hamburger menü dahil
+- Semantik HTML, tek `h1`, anlamlı başlık hiyerarşisi
+- Açıklama, canonical, Open Graph ve Twitter kartı (`og.png`, 1200×630)
+- JSON-LD: `Person`, `WebSite` ve projeler için `ItemList`
+- `sitemap.xml`, `robots.txt`, `404.html`, web manifest
+- Framework yok, CDN yok: bir CSS ve küçük bir JS dosyası
 
-## 🗂️ Bölümler
-
-| Bölüm | İçerik |
-|---|---|
-| 🏠 **Home** | Discord tarzı profil kartı ve tanıtım |
-| 🧑‍💻 **About** | Sunucu görünümünde hakkımda sohbeti |
-| 🚀 **Projects** | MCD.dev ve GitHub Profile README vitrini |
-| 🛠️ **Setup** | Kullandığım araçlar (ve kahve ☕) |
-| 💻 **Terminal** | Küçük komutlar, büyük özgüven |
-| 📬 **Contact** | Bana ulaş: [mcdinspace@gmail.com](mailto:mcdinspace@gmail.com) |
-
-## 🧰 Teknolojiler
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
-
-- ⚡ **Tailwind CSS (CDN)** — özel renk paleti ve utility-first arayüz
-- 🔤 **Google Fonts** — Montserrat & Poppins
-- 🍦 **Vanilla JavaScript** — framework yok, saf efekt ve etkileşim
-
-## 📁 Proje Yapısı
+## Yapı
 
 ```
-mcd/
-├── 📄 index.html        # Ana sayfa
-├── 📂 src/              # Kaynak dosyalar
-│   ├── app.js           # Etkileşim, içerik ve animasyonlar
-│   ├── enhanced.js      # Ayrı canlı GitHub alanı kaynağı
-│   └── styles.css       # Özel stiller
-├── 📂 dist/             # Yayın için kullanılan çıktılar
-│   ├── app.min.js
-│   └── styles.min.css
-├── 📂 github-profile/   # GitHub profil README kaynağı
-└── 📜 LICENSE           # MIT
+index.html        sayfa
+styles.css        tüm stiller
+main.js           mercek, kaydırma animasyonu, aktif menü (~5 KB)
+fonts/            Bricolage Grotesque (latin + latin-ext)
+og.png            paylaşım görseli
+favicon.svg, apple-touch-icon.png, site.webmanifest
+robots.txt, sitemap.xml, 404.html
+github-profile/   GitHub profil README kaynağı
 ```
 
-## 🚀 Çalıştırma
+## Çalıştırma
 
 ```bash
-# Repoyu klonla
 git clone https://github.com/mcd4hell/mcd.git
 cd mcd
-
-# Tarayıcıda aç (veya basit bir sunucuyla)
 npx serve .
 ```
 
-Kaynak dosyalar ve yayın çıktıları repoda tutulur; bağımlılık gerektirmeden tarayıcıda çalışır. 🎈
+## Lisans
 
-## 📝 Lisans
-
-Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır. 📄
-
----
-
-<div align="center">
-
-**🌟 Beğendiysen bir yıldız bırakmayı unutma! 🌟**
-
-Made with 💜 & ☕ by **MCD**
-
-</div>
+[MIT](LICENSE)
